@@ -12,7 +12,7 @@
 	<artifactId>developmentkrogergrocerylistapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>developmentkrogergrocerylistapp</name>
+	<name>vanqapp</name>
 	<description>Kroger Grocery app to make a shopping list</description>
 	<properties>
 		<java.version>1.8</java.version>
