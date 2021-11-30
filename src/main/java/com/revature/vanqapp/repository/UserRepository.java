@@ -1,2 +1,4 @@
-package com.revature.vanqapp.repository;public class UserRepository {
+package com.revature.vanqapp.repository;
+
+public class UserRepository {
 }
