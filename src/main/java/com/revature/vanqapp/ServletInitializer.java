@@ -1,4 +1,4 @@
-package com.revature.devkrogergrocerylistapp;
+package com.revature.vanqapp;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
