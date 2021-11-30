@@ -1,4 +1,4 @@
-package com.revature.developmentkrogergrocerylistapp;
+package com.revature.devkrogergrocerylistapp;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,4 +1,4 @@
-package com.revature.developmentkrogergrocerylistapp;
+package com.revature.devkrogergrocerylistapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
