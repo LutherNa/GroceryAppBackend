@@ -16,6 +16,10 @@
 <br><br>
 * From here the Merge Master will open the compare & pull request and make sure the merge is safe
 <br><br>
+Fatal Upstream head:
+`git branch --set-upstream-to origin`
+<br>
+`git config push.default current`
 
 FAQ help:
 ####How can I update the main branch with my branch’s changes?
