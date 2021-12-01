@@ -35,11 +35,10 @@ import java.util.*;
 @Data
 @Table(name = "Products")
 public class Product {
-
     @Id
+    @Column(nullable = false)
     private String productId;
 
-    @Column(nullable = false)
     private String brand;
 
     @Column(nullable = false)

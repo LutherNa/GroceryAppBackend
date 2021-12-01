@@ -10,6 +10,10 @@ import java.io.IOException;
 
 public class ProductDeserializer extends StdDeserializer<Product> {
 
+    /* ignoring {"upc", "aisleLocation", "categories", "countryOrigin", "images", "items", "temperature"}
+
+     */
+
     public ProductDeserializer(Class<?> vc){
         super(vc);
     }
@@ -20,9 +24,9 @@ public class ProductDeserializer extends StdDeserializer<Product> {
             JsonToken jsonToken = parser.nextToken();
             if(JsonToken.FIELD_NAME.equals(jsonToken)){
                 String fieldName = parser.getCurrentName();
-                parser.nextToken();
+                jsonToken = parser.nextToken();
                 if("productId".equals(fieldName)){
-                    product.setProductId(parser.getValueAsString());
+                    product.setProductId(parser.getValueAsInt());
                 }else if ("brand".equals(fieldName)){
                     product.setBrand(parser.getValueAsString());
                 }else if ("description".equals(fieldName)){

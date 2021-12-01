@@ -1,12 +1,22 @@
 package com.revature.vanqapp.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
+import com.revature.vanqapp.model.FilterTerms;
 import com.revature.vanqapp.model.Product;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductService {
     AuthToken authToken;
@@ -15,27 +25,43 @@ public class ProductService {
         authToken = TokenService.getToken();
     }
 
-    public Product getProducts() throws IOException {final ObjectMapper mapper = new ObjectMapper();
+    public List<Product> getProducts(HashMap<FilterTerms,String> searchMap) throws IOException {
+        return parseArrayNodeToProducts(getAPISearchResult(searchMap));
+    }
+
+    public boolean verifyProductById(int productId) throws IOException {
+        return !parseArrayNodeToProducts(getAPISearchResult(new HashMap<FilterTerms,String>(){{put(FilterTerms.productId,Integer.toString(productId));}})).isEmpty();
+    }
+
+    private ArrayNode getAPISearchResult(HashMap<FilterTerms,String> searchMap) throws IOException {
+        String searchBuilder = searchMap.keySet().stream().map(term -> "filter." + term + "=" + searchMap.get(term) + "&")
+                .collect(Collectors.joining("", "https://api.kroger.com/v1/products?", ""));
+        searchBuilder = searchBuilder.substring(0,searchBuilder.length()-1);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.kroger.com/v1/products?filter.location=01400943&filter.term=cereal&filter.fulfillment=ais&filter.productId=0088491201425") //?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}")
+                .url(searchBuilder)
+//                .url("https://api.kroger.com/v1/products?filter.location=01400943&filter.term=&filter.fulfillment=ais") //?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}")
                 .get()
                 .addHeader("Accept", "application/json")
                 .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
                 .build();
-
         Response response = client.newCall(request).execute();
-        String body = response.body().string();
+        return (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
+    }
+    private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode) throws JsonProcessingException {
+        final ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("ProductDeserializer");
         module.addDeserializer(Product.class, new ProductDeserializer(Product.class));
         mapper.registerModule(module);
-        //System.out.println(response.body().string());
-        //System.out.println(mapper.readValue(response.body().string(),Product.class));
-        //List<Product> productList = mapper.readValue(response.body().string(),new TypeReference<List<Product.class>>(){});
-
-        return mapper.readValue(body, Product.class);
+        List<Product> products = new ArrayList<>();
+        if (arrayNode.isArray()) {
+            for (final JsonNode objNode : arrayNode) {
+                Product product = mapper.readValue(objNode.toString(), Product.class);
+                products.add(product);
+            }
+        }
+        return products;
     }
-
 }
 /**
   * "data":[{"productId":"0085631200277",
