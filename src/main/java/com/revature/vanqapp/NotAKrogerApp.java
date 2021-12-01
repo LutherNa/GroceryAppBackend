@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
-public class DevelopmentkrogergrocerylistappApplication {
+public class NotAKrogerApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		SpringApplication.run(DevelopmentkrogergrocerylistappApplication.class, args);
+		SpringApplication.run(NotAKrogerApp.class, args);
 		ProductService productService = new ProductService();
 		HashMap<FilterTerms,String> searchTest = new HashMap<>();
 		searchTest.put(FilterTerms.locationId,"01400943");
