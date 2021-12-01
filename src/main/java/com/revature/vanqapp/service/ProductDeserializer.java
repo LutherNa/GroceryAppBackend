@@ -31,6 +31,8 @@ public class ProductDeserializer extends StdDeserializer<Product> {
                     product.setBrand(parser.getValueAsString());
                 }else if ("description".equals(fieldName)){
                     product.setDescription(parser.getValueAsString());
+                }else if ("upc".equals(fieldName)){
+                    product.setUPC(parser.getValueAsString());
                 }
             }
         }
