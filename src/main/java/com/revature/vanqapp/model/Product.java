@@ -45,6 +45,9 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
+    @Column()
+    private String UPC;
+
     @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
     @JsonBackReference
     private Set<GroceryList> list = new HashSet<>();
