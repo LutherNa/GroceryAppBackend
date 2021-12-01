@@ -1,10 +1,10 @@
-package com.revature.developmentkrogergrocerylistapp;
+package com.revature.vanqapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DevelopmentkrogergrocerylistappApplicationTests {
+class NotAKrogerApp {
 
 	@Test
 	void contextLoads() {
