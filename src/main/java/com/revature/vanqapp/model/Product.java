@@ -1,8 +1,11 @@
 package com.revature.vanqapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonParser;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.*;
+import javax.persistence.*;
+import lombok.*;
+
+import java.util.*;
+
 /**
  * "data":[{"productId":"0085631200277",
  *          "upc":"0085631200277",
@@ -28,11 +31,20 @@ import lombok.Data;
  *           "temperature":{"indicator":"Refrigerated","heatSensitive":false}}],
  *  "meta":{"pagination":{"start":0,"limit":0,"total":1}}}
  */
+@Entity
 @Data
-@JsonIgnoreProperties({"meta"})
+@Table(name = "Products")
 public class Product {
-    private int productId;
+    @Id
+    @Column(nullable = false)
+    private String productId;
+
     private String brand;
+
+    @Column(nullable = false)
     private String description;
 
+    @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
+    @JsonBackReference
+    private Set<GroceryList> list = new HashSet<>();
 }
