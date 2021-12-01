@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.revature.vanqapp.model.Product;
-import com.revature.vanqapp.model.ProductData;
 
 import java.io.IOException;
 

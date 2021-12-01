@@ -4,14 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.Product;
-import com.revature.vanqapp.model.ProductData;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class ProductService {
     AuthToken authToken;
