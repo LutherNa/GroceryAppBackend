@@ -1,8 +1,10 @@
 package com.revature.vanqapp.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.Product;
 import com.squareup.okhttp.*;
@@ -28,15 +30,19 @@ public class ProductService {
                 .build();
 
         Response response = client.newCall(request).execute();
-//        String body = response.body().string();
         SimpleModule module = new SimpleModule("ProductDeserializer");
         module.addDeserializer(Product.class, new ProductDeserializer(Product.class));
         mapper.registerModule(module);
-        //System.out.println(response.body().string());
-        //System.out.println(mapper.readValue(response.body().string(),Product.class));
-        return mapper.readValue(response.body().string(), new TypeReference<List<Product>>(){});
-//        System.out.println(body);
-//        return mapper.readValue(body,Product[].class);
+        List<Product> products = new ArrayList<>();
+
+        ArrayNode arrNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");//.get("services");
+        if (arrNode.isArray()) {
+            for (final JsonNode objNode : arrNode) {
+                Product product = mapper.readValue(objNode.toString(), Product.class);
+                products.add(product);
+            }
+        }
+        return products;
     }
 
 }

@@ -13,7 +13,7 @@ public class DevelopmentkrogergrocerylistappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DevelopmentkrogergrocerylistappApplication.class, args);
 		ProductService productService = new ProductService();
-		System.out.println(productService.getProducts());
+		productService.getProducts();
 	}
 
 }
