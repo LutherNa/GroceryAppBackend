@@ -31,7 +31,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties({"meta"})
 public class Product {
-    private int productId;
+    private String productId;
     private String brand;
     private String description;
 

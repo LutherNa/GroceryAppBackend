@@ -24,9 +24,9 @@ public class ProductDeserializer extends StdDeserializer<Product> {
             JsonToken jsonToken = parser.nextToken();
             if(JsonToken.FIELD_NAME.equals(jsonToken)){
                 String fieldName = parser.getCurrentName();
-                jsonToken = parser.nextToken();
+                parser.nextToken();
                 if("productId".equals(fieldName)){
-                    product.setProductId(parser.getValueAsInt());
+                    product.setProductId(parser.getValueAsString());
                 }else if ("brand".equals(fieldName)){
                     product.setBrand(parser.getValueAsString());
                 }else if ("description".equals(fieldName)){
