@@ -29,8 +29,8 @@ public class ProductService {
         return parseArrayNodeToProducts(getAPISearchResult(searchMap));
     }
 
-    public boolean verifyProductById(int productId) throws IOException {
-        return !parseArrayNodeToProducts(getAPISearchResult(new HashMap<FilterTerms,String>(){{put(FilterTerms.productId,Integer.toString(productId));}})).isEmpty();
+    public boolean verifyProductById(String productId) throws IOException {
+        return !parseArrayNodeToProducts(getAPISearchResult(new HashMap<FilterTerms,String>(){{put(FilterTerms.productId,productId);}})).isEmpty();
     }
 
     private ArrayNode getAPISearchResult(HashMap<FilterTerms,String> searchMap) throws IOException {

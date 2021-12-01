@@ -39,6 +39,7 @@ public class Product {
     @Column(nullable = false)
     private String productId;
 
+    @Column(nullable = false)
     private String brand;
 
     @Column(nullable = false)
