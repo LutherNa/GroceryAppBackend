@@ -5,11 +5,14 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.revature.vanqapp.model.Product;
-import com.revature.vanqapp.model.ProductData;
 
 import java.io.IOException;
 
 public class ProductDeserializer extends StdDeserializer<Product> {
+
+    /* ignoring {"upc", "aisleLocation", "categories", "countryOrigin", "images", "items", "temperature"}
+
+     */
 
     public ProductDeserializer(Class<?> vc){
         super(vc);
@@ -21,7 +24,7 @@ public class ProductDeserializer extends StdDeserializer<Product> {
             JsonToken jsonToken = parser.nextToken();
             if(JsonToken.FIELD_NAME.equals(jsonToken)){
                 String fieldName = parser.getCurrentName();
-                parser.nextToken();
+                jsonToken = parser.nextToken();
                 if("productId".equals(fieldName)){
                     product.setProductId(parser.getValueAsString());
                 }else if ("brand".equals(fieldName)){

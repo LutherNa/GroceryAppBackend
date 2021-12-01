@@ -1,17 +1,15 @@
 package com.revature.vanqapp.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.Product;
-import com.revature.vanqapp.model.ProductData;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ProductService {
     AuthToken authToken;
@@ -20,25 +18,25 @@ public class ProductService {
         authToken = TokenService.getToken();
     }
 
-    public Product getProducts() throws IOException {final ObjectMapper mapper = new ObjectMapper();
+    public List<Product> getProducts() throws IOException {final ObjectMapper mapper = new ObjectMapper();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.kroger.com/v1/products?filter.location=01400943&filter.term=cereal&filter.fulfillment=ais&filter.productId=0088491201425") //?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}")
+                .url("https://api.kroger.com/v1/products?filter.location=01400943&filter.term=cereal&filter.fulfillment=ais") //?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}")
                 .get()
                 .addHeader("Accept", "application/json")
                 .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
                 .build();
 
         Response response = client.newCall(request).execute();
-        String body = response.body().string();
+//        String body = response.body().string();
         SimpleModule module = new SimpleModule("ProductDeserializer");
         module.addDeserializer(Product.class, new ProductDeserializer(Product.class));
         mapper.registerModule(module);
         //System.out.println(response.body().string());
         //System.out.println(mapper.readValue(response.body().string(),Product.class));
-        //List<Product> productList = mapper.readValue(response.body().string(),new TypeReference<List<Product.class>>(){});
-
-        return mapper.readValue(body, Product.class);
+        return mapper.readValue(response.body().string(), new TypeReference<List<Product>>(){});
+//        System.out.println(body);
+//        return mapper.readValue(body,Product[].class);
     }
 
 }
