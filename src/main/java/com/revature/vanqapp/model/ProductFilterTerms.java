@@ -1,5 +1,8 @@
 package com.revature.vanqapp.model;
 
-public enum FilterTerms {
+/**
+ * Filter terms used to search through the Kroger API
+ */
+public enum ProductFilterTerms {
     term,locationId,productId,brand,fulfillment,start,limit
 }

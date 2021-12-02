@@ -14,9 +14,22 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 
      */
 
+    /**
+     *
+     * @param vc
+     */
     public ProductDeserializer(Class<?> vc){
         super(vc);
     }
+
+    /**
+     * Takes a JsonParser and DeserializationContext and returns a Product. This just defines how to get
+     * a Product from a Json object
+     * @param parser the Json which holds the information
+     * @param deserializer ???
+     * @return returns a Mapped product
+     * @throws IOException throws an IOException if unable to getValueAsString
+     */
     @Override
     public Product deserialize(JsonParser parser, DeserializationContext deserializer) throws IOException {
         Product product = new Product();

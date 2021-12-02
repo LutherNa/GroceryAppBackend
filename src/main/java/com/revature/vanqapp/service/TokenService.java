@@ -13,8 +13,8 @@ public class TokenService {
 
     /**
      * Creates an Authorization token
-     * @return
-     * @throws IOException
+     * @return Returns a verified token
+     * @throws IOException Throws IOException if unable to call readValue from mapper
      */
     public static AuthToken getToken() throws IOException {
         OkHttpClient client = new OkHttpClient();
