@@ -49,6 +49,10 @@ public class Product {
     @Column
     private String UPC;
 
+    @OneToMany
+    @JsonProperty("aisleLocations")
+    private List<AisleLocation> aisleLocations;
+
     @OneToMany(mappedBy = "groceryListId")
     private Set<GroceryList> list = new LinkedHashSet<>();
 }
