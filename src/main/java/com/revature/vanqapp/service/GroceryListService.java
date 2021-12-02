@@ -1,9 +1,6 @@
 package com.revature.vanqapp.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.Product;
@@ -44,40 +41,3 @@ public class GroceryListService {
         return mapper.readValue(objectNode.toString(), Product.class);
     }
 }
-
-/**
- * "data":{"productId":"0088491201425",
- * "upc":"0088491201425",
- * "aisleLocations":[{"bayNumber":"3","description":"AISLE 7","number":"7","numberOfFacings":"1","side":"L","shelfNumber":"2","shelfPositionInBay":"2"}],
- * "brand":"Honey Bunches of Oats",
- * "categories":["Breakfast"],
- * "countryOrigin":"UNITED STATES",
- * "description":"Honey Bunches of Oats® with Almonds Cereal",
- * "images":
- *      [{"perspective":"front",
- *      "featured":true,
- *      "sizes":[{"size":"thumbnail",
- *      "url":"https://www.kroger.com/product/images/thumbnail/front/0088491201425"},
- *      {"size":"small","url":"https://www.kroger.com/product/images/small/front/0088491201425"},
- *      {"size":"medium","url":"https://www.kroger.com/product/images/medium/front/0088491201425"},
- *      {"size":"large","url":"https://www.kroger.com/product/images/large/front/0088491201425"},
- *      {"size":"xlarge","url":"https://www.kroger.com/product/images/xlarge/front/0088491201425"}]},
- *      {"perspective":"right","sizes":[{"size":"medium","url":"https://www.kroger.com/product/images/medium/right/0088491201425"},
- *      {"size":"small","url":"https://www.kroger.com/product/images/small/right/0088491201425"},
- *      {"size":"large","url":"https://www.kroger.com/product/images/large/right/0088491201425"},
- *      {"size":"thumbnail","url":"https://www.kroger.com/product/images/thumbnail/right/0088491201425"},
- *      {"size":"xlarge","url":"https://www.kroger.com/product/images/xlarge/right/0088491201425"}]},
- *      {"perspective":"back","sizes":[{"size":"medium","url":"https://www.kroger.com/product/images/medium/back/0088491201425"},
- *      {"size":"thumbnail","url":"https://www.kroger.com/product/images/thumbnail/back/0088491201425"},
- *      {"size":"small","url":"https://www.kroger.com/product/images/small/back/0088491201425"},
- *      {"size":"large","url":"https://www.kroger.com/product/images/large/back/0088491201425"},
- *      {"size":"xlarge","url":"https://www.kroger.com/product/images/xlarge/back/0088491201425"}]},
- *      {"perspective":"left","sizes":[{"size":"medium","url":"https://www.kroger.com/product/images/medium/left/0088491201425"},
- *      {"size":"thumbnail","url":"https://www.kroger.com/product/images/thumbnail/left/0088491201425"},
- *      {"size":"small","url":"https://www.kroger.com/product/images/small/left/0088491201425"},
- *      {"size":"large","url":"https://www.kroger.com/product/images/large/left/0088491201425"},
- *      {"size":"xlarge","url":"https://www.kroger.com/product/images/xlarge/left/0088491201425"}]}],
- * "items":[{"itemId":"0088491201425","favorite":false,"fulfillment":{"curbside":true,"delivery":true,"inStore":true,"shipToHome":false},"price":{"regular":3.19,"promo":0},"size":"14.5 oz","soldBy":"UNIT"}],
- * "itemInformation":{"depth":"2.22","height":"10.75","width":"7.56"},
- * "temperature":{"indicator":"Ambient","heatSensitive":false}}
- */

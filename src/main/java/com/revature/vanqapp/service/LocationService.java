@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.repository.KrogerApiRepository;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import org.apache.commons.pool2.ObjectPool;
 
 import java.io.IOException;
@@ -23,6 +20,7 @@ public class LocationService {
     public LocationService(ObjectPool<AuthToken> pool) {
         krogerApiRepository = new KrogerApiRepository(pool);
     }
+
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list
      * @param searchMap Parameters for the search
@@ -35,8 +33,8 @@ public class LocationService {
 
     /**
      * Gets location based
-     * @param searchMap
-     * @return
+     * @param searchMap the Location term and information to search for in a pair
+     * @return returns a url string
      */
 
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
