@@ -1,6 +1,7 @@
 package com.revature.vanqapp.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -74,15 +75,12 @@ public class ProductService {
 
     /**
      * Takes an ArrayNode of products and returns a list of products mapped to the Product class
-     * @param arrayNode an arraynode of products in json format
+     * @param arrayNode an ArrayNode of products in json format
      * @return returns a list of Product
-     * @throws JsonProcessingException if unable to map the Json to Products or the Json is misformatting
+     * @throws JsonProcessingException if unable to map the Json to Products or the Json is improperly formatted
      */
     private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule("ProductDeserializer");
-        module.addDeserializer(Product.class, new ProductDeserializer(Product.class));
-        mapper.registerModule(module);
         List<Product> products = new ArrayList<>();
         if (arrayNode.isArray()) {
             for (final JsonNode objNode : arrayNode) {

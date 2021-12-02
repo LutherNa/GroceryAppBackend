@@ -34,6 +34,7 @@ import java.util.*;
 @Entity
 @Data
 @Table(name = "Products")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
     @Id
     @Column(nullable = false)
@@ -45,10 +46,16 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @Column()
+    @Column
     private String UPC;
 
-    @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
+//    @Column
+//    private List<String> aisleLocations;
+
+    @JoinTable(name = "Products_list",
+            joinColumns = @JoinColumn(name = "Product_productId", referencedColumnName = "productId"),
+            inverseJoinColumns = @JoinColumn(name = "list_groceryListId", referencedColumnName = "groceryListId"))
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JsonBackReference
-    private Set<GroceryList> list = new HashSet<>();
+    private Set<GroceryList> list = new LinkedHashSet<>();
 }
