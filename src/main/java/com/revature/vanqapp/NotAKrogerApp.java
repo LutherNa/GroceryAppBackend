@@ -29,7 +29,7 @@ public class NotAKrogerApp {
         SpringApplication.run(NotAKrogerApp.class, args);
         ConfigTokenPool();
         ProductService productService = new ProductService(tokenPool);
-        LocationService locationService = new LocationService();
+        LocationService locationService = new LocationService(tokenPool);
         HashMap<ProductFilterTerms,String> searchTest = new HashMap<>();
         searchTest.put(ProductFilterTerms.locationId,"01400943");
         searchTest.put(ProductFilterTerms.fulfillment,"ais");

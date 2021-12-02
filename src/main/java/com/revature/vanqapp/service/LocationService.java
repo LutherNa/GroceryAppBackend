@@ -9,17 +9,19 @@ import com.revature.vanqapp.model.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.apache.commons.pool2.ObjectPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LocationService {
-    AuthToken authToken;
+    private ObjectPool<AuthToken> tokenPool;
 
-    public LocationService() throws IOException {
-        authToken = TokenService.getToken();
+    public LocationService(ObjectPool<AuthToken> pool) {
+        this.tokenPool = pool;
     }
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list
@@ -39,6 +41,7 @@ public class LocationService {
      */
 
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap) throws IOException {
+        AuthToken authToken;
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations?");
         for (LocationFilterTerms term : searchMap.keySet()) {
             searchBuilder.append("filter." + term);
@@ -52,16 +55,23 @@ public class LocationService {
             }
             searchBuilder.append("=" + searchMap.get(term) + "&");
         }
-        searchBuilder.setLength(searchBuilder.length()-1);
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(searchBuilder.toString())
-                .get()
-                .addHeader("Accept", "application/json")
-                .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
-                .build();
-        Response response = client.newCall(request).execute();
-        return (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
+        ArrayNode arrayNode = null;
+        try {
+            authToken = tokenPool.borrowObject();
+            searchBuilder.setLength(searchBuilder.length()-1);
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(searchBuilder.toString())
+                    .get()
+                    .addHeader("Accept", "application/json")
+                    .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
+                    .build();
+            Response response = client.newCall(request).execute();
+            arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arrayNode;
     }
 
 
