@@ -53,9 +53,7 @@ public class ProductService {
      * @return Returns an Arraynode of all matching Products in Json format
      * @throws IOException throws IOException if unable to call an ObjectMapper
      */
-    private ArrayNode getAPISearchResult(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        AuthToken authToken = null;
-
+    private ArrayNode getAPISearchResult(HashMap<ProductFilterTerms,String> searchMap){
         String searchBuilder = searchMap.keySet().stream().map(term -> "filter." + term + "=" + searchMap.get(term) + "&")
                 .collect(Collectors.joining("", "https://api.kroger.com/v1/products?", ""));
         searchBuilder = searchBuilder.substring(0,searchBuilder.length()-1);
