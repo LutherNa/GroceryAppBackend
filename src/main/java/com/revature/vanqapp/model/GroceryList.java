@@ -23,6 +23,9 @@ public class GroceryList {
     @JsonBackReference
     private User owner;
 
+    @Column
+    private String locationId;
+
     @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
 //    @JsonManagedReference
     private Set<Product> list = new HashSet<>();
