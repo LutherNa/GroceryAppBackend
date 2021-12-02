@@ -30,11 +30,10 @@ public class NotAKrogerApp {
         LocationService locationService = new LocationService(tokenPool);
         HashMap<ProductFilterTerms,String> searchTest = new HashMap<>();
         searchTest.put(ProductFilterTerms.locationId,"01400943");
-        searchTest.put(ProductFilterTerms.fulfillment,"ais");
         searchTest.put(ProductFilterTerms.term,"cereal");
         List<Product> products = productService.getProducts(searchTest);
         for (Product product : products) {
-            System.out.println(product.getDescription()+"\n"+product.getProductId());
+            System.out.println(product.getDescription()+"\n"+product.getProductId()+"\n"+product.getAisleLocations());
         }
         HashMap<LocationFilterTerms,String> searchLocationTest = new HashMap<>();
         searchLocationTest.put(LocationFilterTerms.zipCode, "37601");

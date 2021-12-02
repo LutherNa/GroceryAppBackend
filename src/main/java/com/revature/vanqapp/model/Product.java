@@ -49,8 +49,9 @@ public class Product {
     @Column
     private String UPC;
 
-    @OneToOne
-    private AisleLocation aisleLocation;
+    @OneToMany
+    @JsonProperty("aisleLocations")
+    private List<AisleLocation> aisleLocations;
 
     @JoinTable(name = "Products_list",
             joinColumns = @JoinColumn(name = "Product_productId", referencedColumnName = "productId"),
