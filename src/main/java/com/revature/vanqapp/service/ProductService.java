@@ -11,9 +11,7 @@ import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -30,6 +28,19 @@ public class ProductService {
      * @return a list of Products or an empty list
      * @throws IOException throws IOException because getAPISearchResult throws an IOException
      */
+    public List<Product> getProductsByIdAndLocation(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
+        HashMap<ProductFilterTerms, String> filteredMap =
+                (HashMap<ProductFilterTerms,String>) searchMap.entrySet().stream()
+                .filter(map -> map.getKey().equals(ProductFilterTerms.productId)
+                        || map.getKey().equals(ProductFilterTerms.locationId))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (filteredMap.size() == 2) {
+            return parseArrayNodeToProducts(getAPISearchResult(filteredMap));
+        } else{
+            throw new InputMismatchException();
+        }
+    }
+
     public List<Product> getProducts(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         return parseArrayNodeToProducts(getAPISearchResult(searchMap));
     }
