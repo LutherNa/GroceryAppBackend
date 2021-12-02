@@ -58,4 +58,3 @@ public class LocationDeserializer extends StdDeserializer<Location> {
         return location;
     }
 }
-
