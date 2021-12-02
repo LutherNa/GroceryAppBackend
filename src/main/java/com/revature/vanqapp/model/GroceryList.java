@@ -27,8 +27,8 @@ public class GroceryList {
     private String locationId;
 
     @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
-    @JsonManagedReference
-    private Set<GroceryList> list = new HashSet<>();
+//    @JsonManagedReference
+    private Set<Product> list = new HashSet<>();
 
 
 }

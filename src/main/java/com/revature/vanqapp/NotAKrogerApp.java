@@ -24,7 +24,6 @@ public class NotAKrogerApp {
         List<Product> products = productService.getProducts(searchTest);
         for (Product product : products) {
             System.out.println(product.getDescription()+"\n"+product.getProductId());
-            System.out.println(productService.verifyProductById(product.getProductId()));
         }
     }
 
