@@ -58,8 +58,4 @@ public class LocationDeserializer extends StdDeserializer<Location> {
         return location;
     }
 }
-/*
 
-     private String locationId;
-     private String name;
- */

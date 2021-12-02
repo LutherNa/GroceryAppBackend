@@ -42,7 +42,7 @@ public class LocationService {
      * @throws IOException
      */
 
-    private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap) throws IOException {
+    private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations?");
         for (LocationFilterTerms term : searchMap.keySet()) {
             searchBuilder.append("filter." + term);
