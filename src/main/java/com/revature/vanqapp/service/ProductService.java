@@ -41,6 +41,18 @@ public class ProductService {
         }
     }
 
+    public List<Product> getProductsBySpecified(HashMap<ProductFilterTerms,String> searchMap, ArrayList<ProductFilterTerms>filterTerms) throws IOException {
+        HashMap<ProductFilterTerms, String> filteredMap =
+                (HashMap<ProductFilterTerms,String>) searchMap.entrySet().stream()
+                        .filter(map -> filterTerms.contains(map.getKey()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (filteredMap.size() == filterTerms.size()) {
+            return parseArrayNodeToProducts(getAPISearchResult(filteredMap));
+        } else{
+            throw new InputMismatchException();
+        }
+    }
+
     public List<Product> getProducts(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         return parseArrayNodeToProducts(getAPISearchResult(searchMap));
     }
