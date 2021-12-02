@@ -9,6 +9,7 @@ import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.model.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.*;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class ProductService {
 
+    @Autowired
     KrogerApiRepository krogerApiRepository;
 
     public ProductService(ObjectPool<AuthToken> pool) {

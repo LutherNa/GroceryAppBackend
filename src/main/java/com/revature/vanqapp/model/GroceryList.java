@@ -26,7 +26,7 @@ public class GroceryList {
     @Column
     private String locationId;
 
-    @ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "productId")
 //    @JsonManagedReference
     private Set<Product> list = new HashSet<>();
 

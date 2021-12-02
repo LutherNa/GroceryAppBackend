@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LocationService {
+
+    @Autowired
     KrogerApiRepository krogerApiRepository;
 
     public LocationService(ObjectPool<AuthToken> pool) {
