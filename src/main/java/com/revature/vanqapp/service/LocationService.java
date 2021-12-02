@@ -18,12 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LocationService {
-    private ObjectPool<AuthToken> tokenPool;
     KrogerApiRepository krogerApiRepository;
 
     public LocationService(ObjectPool<AuthToken> pool) {
-        this.tokenPool = pool;
-        krogerApiRepository = new KrogerApiRepository(this.tokenPool);
+        krogerApiRepository = new KrogerApiRepository(pool);
     }
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list
@@ -39,13 +37,12 @@ public class LocationService {
      * Gets location based
      * @param searchMap
      * @return
-     * @throws IOException
      */
 
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations?");
         for (LocationFilterTerms term : searchMap.keySet()) {
-            searchBuilder.append("filter." + term);
+            searchBuilder.append("filter.").append(term);
             switch (term) {
                 case zipCode:
                 case lat:
@@ -54,7 +51,7 @@ public class LocationService {
                     searchBuilder.append(".near");
                     break;
             }
-            searchBuilder.append("=" + searchMap.get(term) + "&");
+            searchBuilder.append("=").append(searchMap.get(term)).append("&");
         }
         searchBuilder.setLength(searchBuilder.length()-1);
         return krogerApiRepository.krogerAPIRequest(searchBuilder.toString());

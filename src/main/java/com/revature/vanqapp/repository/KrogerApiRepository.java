@@ -10,7 +10,7 @@ import org.apache.commons.pool2.ObjectPool;
 
 public class KrogerApiRepository {
 
-    private ObjectPool<AuthToken> tokenPool;
+    private final ObjectPool<AuthToken> tokenPool;
 
     public KrogerApiRepository(ObjectPool<AuthToken> pool) {
         this.tokenPool = pool;
@@ -41,7 +41,7 @@ public class KrogerApiRepository {
             } catch (Exception e) {
                 // ignored
             }
-            return arrayNode;
         }
+        return arrayNode;
     }
 }

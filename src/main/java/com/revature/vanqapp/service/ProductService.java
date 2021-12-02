@@ -8,7 +8,6 @@ import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.model.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
-import com.squareup.okhttp.*;
 import org.apache.commons.pool2.ObjectPool;
 
 import java.io.IOException;
@@ -19,12 +18,10 @@ import java.util.stream.Collectors;
 
 public class ProductService {
 
-    private ObjectPool<AuthToken> tokenPool;
     KrogerApiRepository krogerApiRepository;
 
     public ProductService(ObjectPool<AuthToken> pool) {
-        this.tokenPool = pool;
-        krogerApiRepository = new KrogerApiRepository(this.tokenPool);
+        krogerApiRepository = new KrogerApiRepository(pool);
     }
 
     /**
@@ -51,13 +48,12 @@ public class ProductService {
      * Takes a hashmap and returns an ArrayNode of Products
      * @param searchMap the hashmap of products using (FilterTerm (enum), String (search term))
      * @return Returns an Arraynode of all matching Products in Json format
-     * @throws IOException throws IOException if unable to call an ObjectMapper
      */
     private ArrayNode getAPISearchResult(HashMap<ProductFilterTerms,String> searchMap){
         String searchBuilder = searchMap.keySet().stream().map(term -> "filter." + term + "=" + searchMap.get(term) + "&")
                 .collect(Collectors.joining("", "https://api.kroger.com/v1/products?", ""));
         searchBuilder = searchBuilder.substring(0,searchBuilder.length()-1);
-        return krogerApiRepository.krogerAPIRequest(searchBuilder.toString());
+        return krogerApiRepository.krogerAPIRequest(searchBuilder);
     }
 
     /**
