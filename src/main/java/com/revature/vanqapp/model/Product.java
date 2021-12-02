@@ -53,10 +53,6 @@ public class Product {
     @JsonProperty("aisleLocations")
     private List<AisleLocation> aisleLocations;
 
-    @JoinTable(name = "Products_list",
-            joinColumns = @JoinColumn(name = "Product_productId", referencedColumnName = "productId"),
-            inverseJoinColumns = @JoinColumn(name = "list_groceryListId", referencedColumnName = "groceryListId"))
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JsonBackReference
+    @OneToMany(mappedBy = "groceryListId")
     private Set<GroceryList> list = new LinkedHashSet<>();
 }
