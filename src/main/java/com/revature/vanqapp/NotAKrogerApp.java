@@ -6,13 +6,11 @@ import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
 import com.revature.vanqapp.util.AuthTokenFactory;
 import lombok.SneakyThrows;
-import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
