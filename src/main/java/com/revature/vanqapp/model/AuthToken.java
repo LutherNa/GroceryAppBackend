@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
- * Singleton token generator
+ * AuthToken used for accessing the KrogerAPI
  */
 @Data//@RequiredArgsConstructor @Getter @Setter
 public class AuthToken {
