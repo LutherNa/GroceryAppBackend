@@ -61,9 +61,9 @@ public class LocationService {
 
     private List<Location> parseArrayNodeToLocation(ArrayNode arrayNode) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule("LocationDeserializer");
-        module.addDeserializer(Location.class, new LocationDeserializer(Location.class));
-        mapper.registerModule(module);
+//        SimpleModule module = new SimpleModule("LocationDeserializer");
+//        module.addDeserializer(Location.class, new LocationDeserializer(Location.class));
+//        mapper.registerModule(module);
         List<Location> locations = new ArrayList<>();
         if (arrayNode.isArray()) {
             for (final JsonNode objNode : arrayNode) {

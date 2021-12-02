@@ -43,7 +43,7 @@ public class NotAKrogerApp {
         HashMap<ProductDetailsFilterTerms,String> searchProductInformationTest = new HashMap<>();
         searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
         searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
-        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
+//        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
     }
 
     public static void ConfigTokenPool() {
