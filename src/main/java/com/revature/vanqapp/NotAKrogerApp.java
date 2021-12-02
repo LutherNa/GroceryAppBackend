@@ -1,10 +1,7 @@
 package com.revature.vanqapp;
 
-import com.revature.vanqapp.model.AuthToken;
-import com.revature.vanqapp.model.Location;
-import com.revature.vanqapp.model.LocationFilterTerms;
-import com.revature.vanqapp.model.ProductFilterTerms;
-import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.*;
+import com.revature.vanqapp.service.GroceryListService;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
 import com.revature.vanqapp.util.AuthTokenFactory;
@@ -29,6 +26,7 @@ public class NotAKrogerApp {
         SpringApplication.run(NotAKrogerApp.class, args);
         ConfigTokenPool();
         ProductService productService = new ProductService(tokenPool);
+        GroceryListService groceryListService = new GroceryListService();
         LocationService locationService = new LocationService(tokenPool);
         HashMap<ProductFilterTerms,String> searchTest = new HashMap<>();
         searchTest.put(ProductFilterTerms.locationId,"01400943");
@@ -45,6 +43,10 @@ public class NotAKrogerApp {
         for(Location location: locations){
             System.out.println(location);
         }
+        HashMap<ProductDetailsFilterTerms,String> searchProductInformationTest = new HashMap<>();
+        searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
+        searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
+        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
     }
 
     public static void ConfigTokenPool() {
