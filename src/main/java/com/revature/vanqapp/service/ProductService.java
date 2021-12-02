@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.repository.KrogerApiRepository;
 import com.squareup.okhttp.*;
 import org.apache.commons.pool2.ObjectPool;
 
@@ -19,22 +20,11 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private ObjectPool<AuthToken> tokenPool;
-
-    /**
-     * The authtoken stored in product service, In future possibly move to controller layer and pass as a dependency to all service layers.
-     */
-//    AuthToken authTokenSingle;
-
-    /**
-     * In initializing the product Service, the authToken needs to be called
-     * @throws IOException TokenService.getToken can throw an IOException
-     */
-//    public ProductService() throws IOException {
-//        authTokenSingle = TokenService.getToken();
-//    }
+    KrogerApiRepository krogerApiRepository;
 
     public ProductService(ObjectPool<AuthToken> pool) {
         this.tokenPool = pool;
+        krogerApiRepository = new KrogerApiRepository(this.tokenPool);
     }
 
     /**
@@ -69,31 +59,7 @@ public class ProductService {
         String searchBuilder = searchMap.keySet().stream().map(term -> "filter." + term + "=" + searchMap.get(term) + "&")
                 .collect(Collectors.joining("", "https://api.kroger.com/v1/products?", ""));
         searchBuilder = searchBuilder.substring(0,searchBuilder.length()-1);
-        OkHttpClient client = new OkHttpClient();
-        ArrayNode arrayNode = null;
-        try {
-            authToken = tokenPool.borrowObject();
-            Request request = new Request.Builder()
-                    .url(searchBuilder)
-//                  .url("https://api.kroger.com/v1/products?filter.location=01400943&filter.term=&filter.fulfillment=ais") //?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}")
-                    .get()
-                    .addHeader("Accept", "application/json")
-                    .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
-                    .build();
-            Response response = client.newCall(request).execute();
-            arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to borrow buffer from pool" + e);
-        } finally {
-            try {
-                if (null != authToken) {
-                    tokenPool.returnObject(authToken);
-                }
-            } catch (Exception e) {
-                // ignored
-            }
-        }
-        return arrayNode;
+        return krogerApiRepository.krogerAPIRequest(searchBuilder.toString());
     }
 
     /**

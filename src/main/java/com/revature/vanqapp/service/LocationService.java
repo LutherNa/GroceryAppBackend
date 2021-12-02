@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.*;
+import com.revature.vanqapp.repository.KrogerApiRepository;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -15,13 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LocationService {
     private ObjectPool<AuthToken> tokenPool;
+    KrogerApiRepository krogerApiRepository;
 
     public LocationService(ObjectPool<AuthToken> pool) {
         this.tokenPool = pool;
+        krogerApiRepository = new KrogerApiRepository(this.tokenPool);
     }
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list
@@ -41,7 +43,6 @@ public class LocationService {
      */
 
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap) throws IOException {
-        AuthToken authToken;
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations?");
         for (LocationFilterTerms term : searchMap.keySet()) {
             searchBuilder.append("filter." + term);
@@ -55,23 +56,8 @@ public class LocationService {
             }
             searchBuilder.append("=" + searchMap.get(term) + "&");
         }
-        ArrayNode arrayNode = null;
-        try {
-            authToken = tokenPool.borrowObject();
-            searchBuilder.setLength(searchBuilder.length()-1);
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(searchBuilder.toString())
-                    .get()
-                    .addHeader("Accept", "application/json")
-                    .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
-                    .build();
-            Response response = client.newCall(request).execute();
-            arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return arrayNode;
+        searchBuilder.setLength(searchBuilder.length()-1);
+        return krogerApiRepository.krogerAPIRequest(searchBuilder.toString());
     }
 
 
