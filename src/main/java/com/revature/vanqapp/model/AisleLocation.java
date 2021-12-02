@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+
+@Table(name = "aisleLocations")
 public class AisleLocation {
     @Id @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
