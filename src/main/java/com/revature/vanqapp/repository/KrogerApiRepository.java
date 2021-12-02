@@ -18,7 +18,7 @@ public class KrogerApiRepository {
 
 
     public ArrayNode krogerAPIRequest(String url){
-        AuthToken authToken;
+        AuthToken authToken = null;
         ArrayNode arrayNode = null;
         try {
             authToken = tokenPool.borrowObject();
@@ -34,6 +34,13 @@ public class KrogerApiRepository {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            try {
+                if (null != authToken) {
+                    tokenPool.returnObject(authToken);
+                }
+            } catch (Exception e) {
+                // ignored
+            }
             return arrayNode;
         }
     }
