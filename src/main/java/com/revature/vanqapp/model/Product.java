@@ -49,7 +49,8 @@ public class Product {
     @Column
     private String UPC;
 
-    @OneToMany
+//    @OneToMany
+    @Transient
     @JsonProperty("aisleLocations")
     private List<AisleLocation> aisleLocations;
 
