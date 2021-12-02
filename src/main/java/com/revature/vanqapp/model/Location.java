@@ -7,10 +7,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
     private String locationId;
-    private String addressLine1;
-    private String city;
-    private String state;
-    private int zipCode;
+    private StoreAddress address;
     private String phone;
     private String name;
 }
