@@ -49,8 +49,8 @@ public class Product {
     @Column
     private String UPC;
 
-//    @Column
-//    private List<String> aisleLocations;
+    @OneToOne
+    private AisleLocation aisleLocation;
 
     @JoinTable(name = "Products_list",
             joinColumns = @JoinColumn(name = "Product_productId", referencedColumnName = "productId"),
