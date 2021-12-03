@@ -1,5 +1,6 @@
 package com.revature.vanqapp.model;
 
+import com.revature.vanqapp.model.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class GroceryListProduct {
     @JoinColumn(name = "groceryListId")
     private GroceryList groceryList;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productId")
+    @JoinColumns({@JoinColumn(name = "productId"), @JoinColumn(name = "locationId")})
     private Product product;
 
     private String aisle;

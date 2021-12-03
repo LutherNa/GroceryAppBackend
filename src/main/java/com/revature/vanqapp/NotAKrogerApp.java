@@ -1,6 +1,7 @@
 package com.revature.vanqapp;
 
 import com.revature.vanqapp.model.*;
+import com.revature.vanqapp.model.product.*;
 import com.revature.vanqapp.service.GroceryListService;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
@@ -11,8 +12,10 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 @SpringBootApplication
 public class NotAKrogerApp {
@@ -23,7 +26,7 @@ public class NotAKrogerApp {
     public static void main(String[] args) {
         ConfigTokenPool();
         SpringApplication.run(NotAKrogerApp.class, args);
-        /*
+
         ProductService productService = new ProductService(tokenPool);
         GroceryListService groceryListService = new GroceryListService();
         LocationService locationService = new LocationService(tokenPool);
@@ -32,7 +35,8 @@ public class NotAKrogerApp {
         searchTest.put(ProductFilterTerms.term,"cereal");
         List<Product> products = productService.getProducts(searchTest);
         for (Product product : products) {
-            System.out.println(product.getDescription()+"\n"+product.getProductId()+"\n"+product.getAisleLocations());
+            System.out.println(product.getDescription()+"\n"+product.getProductId()+"\n"+product.getAisleLocations() +
+            "\n" + NumberFormat.getCurrencyInstance(Locale.US).format(product.getRegularPrice()));
         }
         HashMap<LocationFilterTerms,String> searchLocationTest = new HashMap<>();
         searchLocationTest.put(LocationFilterTerms.zipCode, "37601");
@@ -40,11 +44,11 @@ public class NotAKrogerApp {
         for(Location location: locations){
             System.out.println(location);
         }
-        HashMap<ProductDetailsFilterTerms,String> searchProductInformationTest = new HashMap<>();
-        searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
-        searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
+//        HashMap<ProductDetailsFilterTerms,String> searchProductInformationTest = new HashMap<>();
+//        searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
+//        searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
 //        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
-         */
+
     }
 
     public static void ConfigTokenPool() {

@@ -3,7 +3,7 @@ package com.revature.vanqapp.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.revature.vanqapp.model.AuthToken;
-import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.model.ProductDetailsFilterTerms;
 import com.squareup.okhttp.*;
 

@@ -1,11 +1,8 @@
 package com.revature.vanqapp.controller;
 
-import com.revature.vanqapp.model.AuthToken;
-import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.model.ProductFilterTerms;
-import com.revature.vanqapp.model.User;
 import com.revature.vanqapp.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
