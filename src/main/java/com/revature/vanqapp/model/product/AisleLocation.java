@@ -1,10 +1,10 @@
-package com.revature.vanqapp.model;
+package com.revature.vanqapp.model.product;
 
 import lombok.*;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @ToString
