@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.ProductFilterTerms;
-import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ProductService {
                         || map.getKey().equals(ProductFilterTerms.locationId))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (filteredMap.size() == 2) {
-            return parseArrayNodeToProducts(getAPISearchResult(filteredMap));
+            return parseArrayNodeToProducts(getAPISearchResult(filteredMap), filteredMap);
         } else{
             throw new InputMismatchException();
         }
@@ -49,14 +49,14 @@ public class ProductService {
                         .filter(map -> filterTerms.contains(map.getKey()))
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (filteredMap.size() == filterTerms.size()) {
-            return parseArrayNodeToProducts(getAPISearchResult(filteredMap));
+            return parseArrayNodeToProducts(getAPISearchResult(filteredMap), filteredMap);
         } else{
             throw new InputMismatchException();
         }
     }
 
     public List<Product> getProducts(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        return parseArrayNodeToProducts(getAPISearchResult(searchMap));
+        return parseArrayNodeToProducts(getAPISearchResult(searchMap), searchMap);
     }
 
     /**
@@ -66,7 +66,9 @@ public class ProductService {
      * @throws IOException throws IOException because getAPISearchResult throws an IOException
      */
     public boolean verifyProductById(String productId) throws IOException {
-        return !parseArrayNodeToProducts(getAPISearchResult(new HashMap<ProductFilterTerms,String>(){{put(ProductFilterTerms.productId,productId);}})).isEmpty();
+        HashMap<ProductFilterTerms,String> searchMap= new HashMap<>();
+        searchMap.put(ProductFilterTerms.productId,productId);
+        return !parseArrayNodeToProducts(getAPISearchResult(searchMap),searchMap).isEmpty();
     }
 
     /**
@@ -87,12 +89,13 @@ public class ProductService {
      * @return returns a list of Product
      * @throws JsonProcessingException if unable to map the Json to Products or the Json is improperly formatted
      */
-    private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode) throws JsonProcessingException {
+    private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode, HashMap<ProductFilterTerms,String> searchMap) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
         List<Product> products = new ArrayList<>();
         if (arrayNode.isArray()) {
             for (final JsonNode objNode : arrayNode) {
                 Product product = mapper.readValue(objNode.toString(), Product.class);
+                if (searchMap.containsKey(ProductFilterTerms.locationId)) {product.setLocationId(searchMap.get(ProductFilterTerms.productId));}
                 products.add(product);
             }
         }

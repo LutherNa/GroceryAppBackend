@@ -1,9 +1,13 @@
-package com.revature.vanqapp.model;
+package com.revature.vanqapp.model.product;
 
 import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
+
+import com.revature.vanqapp.model.GroceryList;
 import lombok.*;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -32,13 +36,19 @@ import java.util.*;
  *  "meta":{"pagination":{"start":0,"limit":0,"total":1}}}
  */
 @Entity
+@IdClass(ProductLocationId.class)
 @Data
 @Table(name = "Products")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Product {
+public class Product{
     @Id
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String productId;
+
+    @Id
+//    @Column
+    @JsonIgnore
+    private String locationId;
 
     @Column(nullable = false)
     private String brand;
@@ -49,11 +59,27 @@ public class Product {
     @Column
     private String UPC;
 
-//    @OneToMany
-    @Transient
+    @OneToMany
+//    @Transient
     @JsonProperty("aisleLocations")
     private List<AisleLocation> aisleLocations;
 
-    @OneToMany(mappedBy = "groceryListId")
-    private Set<GroceryList> list = new LinkedHashSet<>();
+    @Transient
+    @JsonProperty("items")
+    private List<Item> items;
+
+    @Column
+    @JsonIgnore
+    private BigDecimal regularPrice;
+
+//    Products shouldn't need to know which lists they belong to,
+//      lists should know their products.
+//      This was also causing Hibernate to fail due to mismatched keys; look into.
+//    @OneToMany(mappedBy = "groceryListId")
+//    private Set<GroceryList> list = new LinkedHashSet<>();
+
+    public BigDecimal getRegularPrice(){
+        this.regularPrice = items.get(0).getPrice().getRegular();
+        return regularPrice;
+    }
 }

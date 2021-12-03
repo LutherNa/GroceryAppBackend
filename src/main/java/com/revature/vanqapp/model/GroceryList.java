@@ -2,6 +2,7 @@ package com.revature.vanqapp.model;
 
 import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
+import com.revature.vanqapp.model.product.Product;
 import lombok.*;
 
 import java.util.HashSet;
@@ -26,8 +27,9 @@ public class GroceryList {
     @Column
     private String locationId;
 
-    @OneToMany(mappedBy = "productId")
-//    @JsonManagedReference
+//    @OneToMany(mappedBy = "productId")
+    @OneToMany
+    @JsonManagedReference
     private Set<Product> list = new HashSet<>();
 
 
