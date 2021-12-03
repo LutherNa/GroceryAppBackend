@@ -21,8 +21,9 @@ public class NotAKrogerApp {
 
     @SneakyThrows
     public static void main(String[] args) {
-        SpringApplication.run(NotAKrogerApp.class, args);
         ConfigTokenPool();
+        SpringApplication.run(NotAKrogerApp.class, args);
+        /*
         ProductService productService = new ProductService(tokenPool);
         GroceryListService groceryListService = new GroceryListService();
         LocationService locationService = new LocationService(tokenPool);
@@ -43,6 +44,7 @@ public class NotAKrogerApp {
         searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
         searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
 //        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
+         */
     }
 
     public static void ConfigTokenPool() {
