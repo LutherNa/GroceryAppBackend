@@ -41,7 +41,14 @@ public class LocationService {
      */
 
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
-        StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations?");
+        StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations");
+        if(searchMap.containsKey(LocationFilterTerms.locationId)){
+            return krogerApiRepository.krogerAPIRequest(searchBuilder
+                    .append("/")
+                    .append(searchMap.get(LocationFilterTerms.locationId))
+                    .toString());
+        }
+        searchBuilder.append("?");
         for (LocationFilterTerms term : searchMap.keySet()) {
             searchBuilder.append("filter.").append(term);
             switch (term) {
