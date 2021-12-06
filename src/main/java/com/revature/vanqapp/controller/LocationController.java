@@ -7,6 +7,7 @@ import com.revature.vanqapp.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
