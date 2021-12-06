@@ -27,7 +27,7 @@ public class LocationController {
         }
     }
 
-    @GetMapping
+    @PostMapping
     public List<Location> getLocationByZip(@RequestBody HashMap<LocationFilterTerms, String> search) throws IOException {
         /*
         HashMap<LocationFilterTerms, String> search = new HashMap<>();
