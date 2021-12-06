@@ -13,12 +13,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PutMapping
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
     }
 
-    @GetMapping
+    @PostMapping
     public boolean verify(@RequestBody User user){
         try{
             return userService.validate(user);
