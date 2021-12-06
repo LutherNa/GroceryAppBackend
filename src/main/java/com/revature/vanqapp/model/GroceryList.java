@@ -32,5 +32,12 @@ public class GroceryList {
     @JsonManagedReference
     private Set<Product> list = new HashSet<>();
 
+    public GroceryList(){
+    }
 
+    public GroceryList(String name, String locationId, User owner){
+        this.name = name;
+        this.locationId = locationId;
+        this.owner = owner;
+    }
 }

@@ -23,5 +23,6 @@ public class User {
 
     @OneToMany(mappedBy = "owner")
     @JsonManagedReference
+    @JsonIgnore
     private List<GroceryList> groceryLists;
 }
