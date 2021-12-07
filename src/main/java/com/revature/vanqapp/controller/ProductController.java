@@ -33,7 +33,6 @@ public class ProductController {
 
     @PostMapping("/{productId}") // -> localhost:8081/products/<some_productId>
     public List<Product> getProductById(@PathVariable String productId, @RequestBody HashMap<ProductFilterTerms,String> search) throws IOException {
-        System.out.println("Made it to search.");
         search.put(ProductFilterTerms.productId, productId);
         return productService.getProducts(search);
     }
