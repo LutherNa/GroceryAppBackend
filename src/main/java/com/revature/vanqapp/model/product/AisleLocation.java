@@ -1,5 +1,6 @@
 package com.revature.vanqapp.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 
 @Table(name = "aisleLocations")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AisleLocation {
     @Id @Column
     @GeneratedValue(strategy = GenerationType.AUTO)

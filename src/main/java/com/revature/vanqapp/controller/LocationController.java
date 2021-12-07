@@ -4,6 +4,7 @@ import com.revature.vanqapp.model.Location;
 import com.revature.vanqapp.model.LocationFilterTerms;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,15 +18,16 @@ import static com.revature.vanqapp.NotAKrogerApp.tokenPool;
 @RequestMapping(value = "/location")
 public class LocationController {
 
+    @Autowired
     private LocationService locationService;
 
-    public LocationController(){
-        try{
-            locationService = new LocationService(tokenPool);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public LocationController(){
+//        try{
+//            locationService = new LocationService(tokenPool);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @PostMapping
     public List<Location> getLocationByZip(@RequestBody HashMap<LocationFilterTerms, String> search) throws IOException {
