@@ -41,7 +41,7 @@ public class NotAKrogerApp {
         ProductService productService = new ProductService(tokenPool);
         GroceryListService groceryListService;
         try {
-            groceryListService = new GroceryListService();
+            groceryListService = new GroceryListService(tokenPool);
         } catch (IOException e) {
             e.printStackTrace();
         }

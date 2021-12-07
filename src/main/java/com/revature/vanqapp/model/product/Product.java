@@ -92,10 +92,10 @@ public class Product{
             productHashMap.put(ProductFilterTerms.locationId,product.getLocationId());
         }
         //these two may be unnecessary
-        if (!product.getLocationId().isEmpty()) {
+        if (!product.getBrand().isEmpty()) {
             productHashMap.put(ProductFilterTerms.brand,product.getBrand());
         }
-        if (!product.getLocationId().isEmpty()) {
+        if (!product.getDescription().isEmpty()) {
             productHashMap.put(ProductFilterTerms.term,product.getDescription());
         }
         return (productHashMap.isEmpty()) ? null : productHashMap;
