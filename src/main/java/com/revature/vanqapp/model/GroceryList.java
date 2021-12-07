@@ -28,9 +28,9 @@ public class GroceryList {
     private String locationId;
 
 //    @OneToMany(mappedBy = "productId")
-    @OneToMany
-    @JsonManagedReference
-    private Set<Product> list = new HashSet<>();
+//    @OneToMany
+//    @JsonManagedReference
+//    private Set<Product> list = new HashSet<>();
 
     public GroceryList(){
     }
