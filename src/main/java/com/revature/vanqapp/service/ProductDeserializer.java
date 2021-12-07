@@ -11,11 +11,9 @@ import java.io.IOException;
 public class ProductDeserializer extends StdDeserializer<Product> {
 
     /* ignoring {"upc", "aisleLocation", "categories", "countryOrigin", "images", "items", "temperature"}
-
      */
 
     /**
-     *
      * @param vc
      */
     public ProductDeserializer(Class<?> vc){

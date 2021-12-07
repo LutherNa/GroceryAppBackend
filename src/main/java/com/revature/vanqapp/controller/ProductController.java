@@ -1,7 +1,7 @@
 package com.revature.vanqapp.controller;
 
 import com.revature.vanqapp.model.product.Product;
-import com.revature.vanqapp.model.ProductFilterTerms;
+import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
