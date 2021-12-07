@@ -3,6 +3,7 @@ package com.revature.vanqapp.controller;
 import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -15,15 +16,16 @@ import static com.revature.vanqapp.NotAKrogerApp.tokenPool;
 @RequestMapping(value = "/products")
 public class ProductController {
 
+    @Autowired
     ProductService productService;
 
-    public ProductController(){
-        try{
-            productService = new ProductService(tokenPool);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public ProductController(){
+//        try{
+//            productService = new ProductService(tokenPool);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @PostMapping
     public List<Product> getProduct(@RequestBody HashMap<ProductFilterTerms, String> search) throws IOException {

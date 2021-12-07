@@ -18,7 +18,6 @@ public class KrogerApiRepository {
         this.tokenPool = pool;
     }
 
-
     /**
      * Takes a stringURL and queries the KrogerAPI
      * @param url the url used to query the API
@@ -37,6 +36,7 @@ public class KrogerApiRepository {
                     .addHeader("Authorization", "Bearer " + authToken.getAccess_token())
                     .build();
             Response response = client.newCall(request).execute();
+            //needs error handling for empty ArrayNode
             arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
         } catch (Exception e) {
             e.printStackTrace();
