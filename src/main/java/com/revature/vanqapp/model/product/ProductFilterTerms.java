@@ -1,4 +1,4 @@
-package com.revature.vanqapp.model;
+package com.revature.vanqapp.model.product;
 
 /**
  * Filter terms used to search through the Kroger API

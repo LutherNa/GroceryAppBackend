@@ -82,4 +82,22 @@ public class Product{
         this.regularPrice = items.get(0).getPrice().getRegular();
         return regularPrice;
     }
+
+    public HashMap<ProductFilterTerms, String> toSearchableHashMap(Product product) {
+        HashMap<ProductFilterTerms, String> productHashMap = new HashMap<>();
+        if (!product.getProductId().isEmpty()) {
+            productHashMap.put(ProductFilterTerms.productId,product.getProductId());
+        }
+        if (!product.getLocationId().isEmpty()) {
+            productHashMap.put(ProductFilterTerms.locationId,product.getLocationId());
+        }
+        //these two may be unnecessary
+        if (!product.getLocationId().isEmpty()) {
+            productHashMap.put(ProductFilterTerms.brand,product.getBrand());
+        }
+        if (!product.getLocationId().isEmpty()) {
+            productHashMap.put(ProductFilterTerms.term,product.getDescription());
+        }
+        return (productHashMap.isEmpty()) ? null : productHashMap;
+    }
 }

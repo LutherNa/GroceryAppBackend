@@ -1,0 +1,16 @@
+#Datasource
+spring.datasource.url = jdbc:postgresql://YOUR_DATABASE?currentSchema=YOUR_SCHEMA
+spring.datasource.username
+spring.datasource.password
+
+# JPA Settings
+#Debugging
+spring.jpa.show-sql=false
+spring.jpa.hibernate.ddl-auto=update
+
+server.port=8080
+
+#Swagger Configuration
+#springdoc.swagger-ui.path=/docs
+#server.servlet.context-path=/api
+#spring.mvc.pathmatch.matching-strategy=ant_path_matcher
