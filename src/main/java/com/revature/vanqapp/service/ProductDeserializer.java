@@ -21,10 +21,12 @@ public class ProductDeserializer extends StdDeserializer<Product> {
     }
 
     /**
+     * Depreciated function, no longer in use
+     *
      * Takes a JsonParser and DeserializationContext and returns a Product. This just defines how to get
      * a Product from a Json object
      * @param parser the Json which holds the information
-     * @param deserializer ???
+     * @param deserializer Passes information on how to deconstruct the entity
      * @return returns a Mapped product
      * @throws IOException throws an IOException if unable to getValueAsString
      */

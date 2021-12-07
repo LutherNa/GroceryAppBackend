@@ -20,6 +20,11 @@ public class ProductService {
     @Autowired
     KrogerApiRepository krogerApiRepository;
 
+    /**
+     * Constructor taking an AuthToken pool and
+     * @param pool Send a pool of potentially available AuthTokens to be injected into the repository via
+     * dependency injection
+     */
     public ProductService(ObjectPool<AuthToken> pool) {
         krogerApiRepository = new KrogerApiRepository(pool);
     }
@@ -43,6 +48,13 @@ public class ProductService {
         }
     }
 
+    /**
+     * Takes a Hashmap and an Arraylist then maps each filter term to its search parameter for the Kroger API
+     * @param searchMap The hashmap of the filterterm and filter word
+     * @param filterTerms Additional filter words
+     * @return Returns a list of products that match the search
+     * @throws IOException Return an IOException propagated from the API query
+     */
     public List<Product> getProductsBySpecified(HashMap<ProductFilterTerms,String> searchMap, ArrayList<ProductFilterTerms>filterTerms) throws IOException {
         HashMap<ProductFilterTerms, String> filteredMap =
                 (HashMap<ProductFilterTerms,String>) searchMap.entrySet().stream()
@@ -55,6 +67,12 @@ public class ProductService {
         }
     }
 
+    /**
+     * Takes a single searchMap and returns a list of products
+     * @param searchMap The productFilterTerms and matching values
+     * @return Returns a completed list of Products
+     * @throws IOException Returns an IOException propagated from the API query
+     */
     public List<Product> getProducts(HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         return parseArrayNodeToProducts(getAPISearchResult(searchMap), searchMap);
     }

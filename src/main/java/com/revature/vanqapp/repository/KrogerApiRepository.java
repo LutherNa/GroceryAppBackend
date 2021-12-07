@@ -17,6 +17,11 @@ public class KrogerApiRepository {
     }
 
 
+    /**
+     * Takes a stringURL and queries the KrogerAPI
+     * @param url the url used to query the API
+     * @return returns an ArrayNode of all the Json objects collected
+     */
     public ArrayNode krogerAPIRequest(String url){
         AuthToken authToken = null;
         ArrayNode arrayNode = null;

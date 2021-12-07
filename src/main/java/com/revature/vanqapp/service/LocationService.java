@@ -20,6 +20,10 @@ public class LocationService {
     @Autowired
     KrogerApiRepository krogerApiRepository;
 
+    /**
+     * Constructor that passes an AuthToken pool
+     * @param pool the pool is then passed to a Repository
+     */
     public LocationService(ObjectPool<AuthToken> pool) {
         krogerApiRepository = new KrogerApiRepository(pool);
     }
@@ -39,7 +43,6 @@ public class LocationService {
      * @param searchMap the Location term and information to search for in a pair
      * @return returns a url string
      */
-
     private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations");
         if(searchMap.containsKey(LocationFilterTerms.locationId)){
@@ -66,6 +69,12 @@ public class LocationService {
     }
 
 
+    /**
+     * Takes an ArrayNode (List of Json objects) and maps them to locations
+     * @param arrayNode the list of multiple Json objects
+     * @return returns a list of mapped Locations
+     * @throws JsonProcessingException returns JsonProcessingException if unable to parse the ArrayNode
+     */
     private List<Location> parseArrayNodeToLocation(ArrayNode arrayNode) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
 //        SimpleModule module = new SimpleModule("LocationDeserializer");
