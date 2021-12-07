@@ -9,12 +9,14 @@ import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Service
 public class LocationService {
 
     @Autowired
