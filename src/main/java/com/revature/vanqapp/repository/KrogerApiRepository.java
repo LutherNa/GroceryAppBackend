@@ -7,7 +7,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import org.apache.commons.pool2.ObjectPool;
+import org.springframework.stereotype.Component;
 
+@Component
 public class KrogerApiRepository {
 
     private final ObjectPool<AuthToken> tokenPool;

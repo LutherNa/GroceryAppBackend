@@ -10,15 +10,20 @@ import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class ProductService {
 
     @Autowired
     KrogerApiRepository krogerApiRepository;
+
+    @Autowired
+    AuthTokenFactoryBean authTokenFactoryBean;
 
     /**
      * Constructor taking an AuthToken pool and

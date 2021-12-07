@@ -27,6 +27,9 @@ public class GroceryListService {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    AuthTokenFactoryBean authTokenFactoryBean;
   
     /**
      * Constructor that passes an AuthToken pool
@@ -53,7 +56,7 @@ public class GroceryListService {
     }
 
     public GroceryList addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        if ((productService.getProductsByIdAndLocation(searchMap).getClass()) == Product.class);
+//        if ((productService.getProductsByIdAndLocation(searchMap).getClass()) == Product.class);
             return new GroceryList();
     }
 }
