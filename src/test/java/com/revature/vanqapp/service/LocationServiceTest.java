@@ -1,11 +1,17 @@
 package com.revature.vanqapp.service;
 
+import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.User;
 import com.revature.vanqapp.repository.GroceryListRepository;
+import com.revature.vanqapp.repository.KrogerApiRepository;
 import com.revature.vanqapp.repository.UserRepository;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 
@@ -14,20 +20,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LocationServiceTest {
 
+    public static GenericObjectPool<AuthToken> tokenPool;
+    @Mock
     GroceryListRepository mockGroceryListRepository;
+    @Mock
     UserRepository mockUserRepository;
+    @Mock
     ProductService mockProductService;
+    @Mock
     User mockUser;
-    GroceryListService groceryListService;
+    @Mock
+    GroceryListService mockGroceryListService;
+    @Mock
+    KrogerApiRepository mockKrogerApiRepository;
+    LocationService locationService;
 
     @BeforeEach
     public void setup() throws IOException {
-        mockGroceryListRepository = Mockito.mock(GroceryListRepository.class);
-        mockUserRepository = Mockito.mock(UserRepository.class);
-        mockProductService = Mockito.mock(ProductService.class);
-        mockUser = new User();
-        mockUser.setUserId(0);
-        groceryListService = new GroceryListService(tokenPool);
+        locationService = new LocationService(tokenPool);
+        MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(
+                locationService,
+                "krogerApiRepository",
+                mockKrogerApiRepository);
     }
 
     @Test

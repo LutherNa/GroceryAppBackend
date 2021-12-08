@@ -2,27 +2,20 @@ package com.revature.vanqapp.service;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
-import com.revature.vanqapp.model.User;
-import com.revature.vanqapp.model.product.Product;
-import com.revature.vanqapp.model.product.ProductFilterTerms;
+import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.repository.KrogerApiRepository;
 import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.aspectj.util.Reflection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 
 class ProductServiceTest {
 
@@ -46,7 +39,6 @@ class ProductServiceTest {
                 productService,
                 "krogerApiRepository",
                 mockKrogerApiRepository);
-        ;
         ReflectionTestUtils.setField(
                 mockProductService,
                 "krogerApiRepository",

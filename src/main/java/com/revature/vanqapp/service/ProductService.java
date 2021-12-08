@@ -49,9 +49,7 @@ public class ProductService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (filteredMap.size() == 2) {
             return parseArrayNodeToProducts(getAPISearchResult(filteredMap), filteredMap);
-        } else{
-            throw new InputMismatchException();
-        }
+        } else{ throw new InputMismatchException(); }
     }
 
     /**
