@@ -15,16 +15,11 @@ public class GroceryListProduct {
     private long productListId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
     @JoinColumn(name = "groceryListId")
     private GroceryList groceryList;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
     @JoinColumns({@JoinColumn(name = "productId"), @JoinColumn(name = "locationId")})
     private Product product;
-
-    private String aisle;
-    private String price;
     private int quantity = 1;
 
 }
