@@ -2,10 +2,10 @@ package com.revature.vanqapp;
 
 import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.model.product.*;
+import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import com.revature.vanqapp.service.GroceryListService;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
-import com.revature.vanqapp.util.AuthTokenFactory;
 import lombok.SneakyThrows;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -25,17 +25,17 @@ public class NotAKrogerApp {
 
     @SneakyThrows
     public static void main(String[] args) {
-        ConfigTokenPool();
+//        ConfigTokenPool();
 //        TestOnRun();
         SpringApplication.run(NotAKrogerApp.class, args);
     }
 
-    public static void ConfigTokenPool() {
-        tokenPool = new GenericObjectPool<>(new AuthTokenFactory());
-        GenericObjectPoolConfig<AuthToken> tokenPoolConfig = new GenericObjectPoolConfig<>();
-        tokenPoolConfig.setMaxTotal(1);
-        tokenPool.setConfig(tokenPoolConfig);
-    }
+//    public static void ConfigTokenPool() {
+//        tokenPool = new GenericObjectPool<>(new AuthTokenFactoryBean.AuthTokenFactory());
+//        GenericObjectPoolConfig<AuthToken> tokenPoolConfig = new GenericObjectPoolConfig<>();
+//        tokenPoolConfig.setMaxTotal(1);
+//        tokenPool.setConfig(tokenPoolConfig);
+//    }
 
     private static void TestOnRun() {
         ProductService productService = new ProductService(tokenPool);

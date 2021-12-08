@@ -8,6 +8,7 @@ import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
+import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
