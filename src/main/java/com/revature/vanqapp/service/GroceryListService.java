@@ -4,9 +4,8 @@ import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.GroceryList;
 import com.revature.vanqapp.model.GroceryListProduct;
 import com.revature.vanqapp.model.User;
-import com.revature.vanqapp.model.product.AisleLocation;
-import com.revature.vanqapp.model.product.Product;
-import com.revature.vanqapp.model.product.ProductFilterTerms;
+import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.repository.GroceryListProductRepository;
 import com.revature.vanqapp.repository.GroceryListRepository;
 import com.revature.vanqapp.util.AuthTokenFactoryBean;
@@ -70,8 +69,8 @@ public class GroceryListService {
             groceryListProduct.setProduct(product);
             groceryListProduct.setGroceryList(groceryList);
 
-            List<AisleLocation> aisleLocations = product.getAisleLocations();
-            AisleLocation aisleLocation = aisleLocations.get(0);
+            List<Product.AisleLocation> aisleLocations = product.getAisleLocations();
+            Product.AisleLocation aisleLocation = aisleLocations.get(0);
             String aisleNumber = aisleLocation.getNumber();
 
             groceryListProductRepository.save(groceryListProduct);

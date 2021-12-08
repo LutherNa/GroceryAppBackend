@@ -1,7 +1,5 @@
 package com.revature.vanqapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.revature.vanqapp.model.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;
