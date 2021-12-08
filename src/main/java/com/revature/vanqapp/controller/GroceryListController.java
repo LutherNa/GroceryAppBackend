@@ -7,7 +7,6 @@ import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.service.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

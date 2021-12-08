@@ -9,17 +9,14 @@ import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.repository.GroceryListProductRepository;
 import com.revature.vanqapp.repository.GroceryListRepository;
+import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class GroceryListService {
