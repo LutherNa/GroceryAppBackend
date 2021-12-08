@@ -3,7 +3,6 @@ package com.revature.vanqapp.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.repository.KrogerApiRepository;
@@ -83,7 +82,7 @@ public class LocationService {
 //        module.addDeserializer(Location.class, new LocationDeserializer(Location.class));
 //        mapper.registerModule(module);
         List<Location> locations = new ArrayList<>();
-        if (arrayNode.isArray()) {
+        if (arrayNode != null && arrayNode.isArray()) {
             for (final JsonNode objNode : arrayNode) {
                 Location location = mapper.readValue(objNode.toString(), Location.class);
                 locations.add(location);
