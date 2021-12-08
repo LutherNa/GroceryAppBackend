@@ -1,14 +1,11 @@
 package com.revature.vanqapp;
 
 import com.revature.vanqapp.model.*;
-import com.revature.vanqapp.model.product.*;
-import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import com.revature.vanqapp.service.GroceryListService;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
 import lombok.SneakyThrows;
 import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

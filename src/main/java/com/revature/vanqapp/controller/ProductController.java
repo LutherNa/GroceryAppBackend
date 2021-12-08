@@ -1,7 +1,7 @@
 package com.revature.vanqapp.controller;
 
-import com.revature.vanqapp.model.product.Product;
-import com.revature.vanqapp.model.product.ProductFilterTerms;
+import com.revature.vanqapp.model.Product;
+import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.service.ProductService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;

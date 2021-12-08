@@ -3,7 +3,7 @@ package com.revature.vanqapp.controller;
 import com.revature.vanqapp.model.GroceryList;
 import com.revature.vanqapp.model.GroceryListProduct;
 import com.revature.vanqapp.model.User;
-import com.revature.vanqapp.model.product.ProductFilterTerms;
+import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.service.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

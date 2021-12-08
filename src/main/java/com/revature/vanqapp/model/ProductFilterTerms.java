@@ -1,4 +1,4 @@
-package com.revature.vanqapp.model.product;
+package com.revature.vanqapp.model;
 
 import lombok.Data;
 
