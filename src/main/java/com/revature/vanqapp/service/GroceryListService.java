@@ -77,9 +77,6 @@ public class GroceryListService {
             AisleLocation aisleLocation = aisleLocations.get(0);
             String aisleNumber = aisleLocation.getNumber();
 
-            groceryListProduct.setAisle(aisleNumber);
-            groceryListProduct.setPrice(NumberFormat.getCurrencyInstance(Locale.US).format(product.getRegularPrice()));
-
             groceryListProductRepository.save(groceryListProduct);
             //System.out.println(groceryListProduct);
             return groceryListProduct;
