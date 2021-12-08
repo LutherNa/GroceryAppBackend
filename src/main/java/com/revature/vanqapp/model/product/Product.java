@@ -59,7 +59,7 @@ public class Product{
     @Column
     private String UPC;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
 //    @Transient
     @JsonProperty("aisleLocations")
     private List<AisleLocation> aisleLocations;

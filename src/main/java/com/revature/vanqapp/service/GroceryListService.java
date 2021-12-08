@@ -7,6 +7,7 @@ import com.revature.vanqapp.model.User;
 import com.revature.vanqapp.model.product.AisleLocation;
 import com.revature.vanqapp.model.product.Product;
 import com.revature.vanqapp.model.product.ProductFilterTerms;
+import com.revature.vanqapp.repository.GroceryListProductRepository;
 import com.revature.vanqapp.repository.GroceryListRepository;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class GroceryListService {
     GroceryListRepository groceryListRepository;
 
     @Autowired
-    GroceryListRepository groceryListProductRepository;
+    GroceryListProductRepository groceryListProductRepository;
 
     @Autowired
     UserService userService;
@@ -79,7 +80,8 @@ public class GroceryListService {
             groceryListProduct.setAisle(aisleNumber);
             groceryListProduct.setPrice(NumberFormat.getCurrencyInstance(Locale.US).format(product.getRegularPrice()));
 
-            System.out.println(groceryListProduct);
+            groceryListProductRepository.save(groceryListProduct);
+            //System.out.println(groceryListProduct);
             return groceryListProduct;
         }
         return new GroceryListProduct();
