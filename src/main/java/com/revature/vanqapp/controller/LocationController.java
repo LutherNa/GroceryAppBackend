@@ -4,6 +4,8 @@ import com.revature.vanqapp.model.Location;
 import com.revature.vanqapp.model.LocationFilterTerms;
 import com.revature.vanqapp.service.LocationService;
 import com.revature.vanqapp.service.ProductService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.revature.vanqapp.NotAKrogerApp.tokenPool;
+//import static com.revature.vanqapp.NotAKrogerApp.tokenPool;
 
 @RestController()
 @RequestMapping(value = "/location")
@@ -30,7 +32,9 @@ public class LocationController {
 //    }
 
     @PostMapping
-    public List<Location> getLocationByZip(@RequestBody HashMap<LocationFilterTerms, String> search) throws IOException {
+    public List<Location> getLocationByZip(
+            @Parameter(schema = @Schema(implementation = LocationFilterTerms.LocationFilterTermsDummy.class))
+            @RequestBody HashMap<LocationFilterTerms, String> search) throws IOException {
         /*
         HashMap<LocationFilterTerms, String> search = new HashMap<>();
         search.put(LocationFilterTerms.zipCode,zipCode.toString());
