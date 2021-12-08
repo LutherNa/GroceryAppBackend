@@ -1,6 +1,7 @@
 package com.revature.vanqapp.controller;
 
 import com.revature.vanqapp.model.GroceryList;
+import com.revature.vanqapp.model.GroceryListProduct;
 import com.revature.vanqapp.model.User;
 import com.revature.vanqapp.model.product.ProductFilterTerms;
 import com.revature.vanqapp.service.GroceryListService;
@@ -24,7 +25,7 @@ public class GroceryListController {
     }
 
     @PostMapping("/{name}/{locationId}/{userId}/{productId}")
-    public GroceryList addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
+    public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
         searchMap.put(ProductFilterTerms.locationId, locationId);
         searchMap.put(ProductFilterTerms.productId, productId);

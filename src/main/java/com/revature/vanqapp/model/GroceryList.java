@@ -20,7 +20,7 @@ public class GroceryList {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
     private User owner;
 

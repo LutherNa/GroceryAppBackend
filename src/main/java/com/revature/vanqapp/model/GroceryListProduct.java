@@ -1,5 +1,6 @@
 package com.revature.vanqapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.revature.vanqapp.model.product.Product;
 import lombok.Data;
 
@@ -14,13 +15,16 @@ public class GroceryListProduct {
     private long productListId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name = "groceryListId")
     private GroceryList groceryList;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumns({@JoinColumn(name = "productId"), @JoinColumn(name = "locationId")})
     private Product product;
 
     private String aisle;
-    private double price;
+    private String price;
+    private int quantity = 1;
 
 }
