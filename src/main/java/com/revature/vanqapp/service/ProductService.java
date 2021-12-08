@@ -49,9 +49,7 @@ public class ProductService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (filteredMap.size() == 2) {
             return parseArrayNodeToProducts(getAPISearchResult(filteredMap), filteredMap);
-        } else{
-            throw new InputMismatchException();
-        }
+        } else{ throw new InputMismatchException(); }
     }
 
     /**
@@ -116,7 +114,7 @@ public class ProductService {
     private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode, HashMap<ProductFilterTerms,String> searchMap) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
         List<Product> products = new ArrayList<>();
-        if (arrayNode.isArray()) {
+        if (arrayNode != null && arrayNode.isArray()) {
             for (final JsonNode objNode : arrayNode) {
                 Product product = mapper.readValue(objNode.toString(), Product.class);
                 if (searchMap.containsKey(ProductFilterTerms.locationId)) {product.setLocationId(searchMap.get(ProductFilterTerms.productId));}

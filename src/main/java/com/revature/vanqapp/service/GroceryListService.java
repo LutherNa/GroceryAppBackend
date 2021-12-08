@@ -41,7 +41,6 @@ public class GroceryListService {
      */
     public GroceryListService(ObjectPool<AuthToken> pool) throws IOException {
         this.productService = new ProductService(pool);
-        this.userService = new UserService();
     }
 
     public List<GroceryList> getAllGroceryList(User user){
