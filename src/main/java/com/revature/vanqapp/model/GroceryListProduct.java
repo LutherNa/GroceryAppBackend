@@ -21,6 +21,7 @@ public class GroceryListProduct {
     private Product product;
 
     private String aisle;
-    private double price;
+    private String price;
+    private int quantity = 1;
 
 }
