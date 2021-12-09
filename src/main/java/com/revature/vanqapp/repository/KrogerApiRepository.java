@@ -46,7 +46,7 @@ public class KrogerApiRepository {
             //needs error handling for empty ArrayNode
             try{
                 arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
-            }catch(NullPointerException n){
+            }catch(ClassCastException n){
                 System.out.println(n.getStackTrace());
                 //Add this to a logger in the future
             }
