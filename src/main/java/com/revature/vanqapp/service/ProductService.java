@@ -35,9 +35,9 @@ public class ProductService {
      * @param pool Send a pool of potentially available AuthTokens to be injected into the repository via
      * dependency injection
      */
-    public ProductService(ObjectPool<AuthToken> pool) {
-        krogerApiRepository = new KrogerApiRepository(pool);
-    }
+//    public ProductService(ObjectPool<AuthToken> pool) {
+//        krogerApiRepository = new KrogerApiRepository(pool);
+//    }
 
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list

@@ -25,9 +25,9 @@ public class LocationService {
      * Constructor that passes an AuthToken pool
      * @param pool the pool is then passed to a Repository
      */
-    public LocationService(ObjectPool<AuthToken> pool) {
-        krogerApiRepository = new KrogerApiRepository(pool);
-    }
+//    public LocationService(ObjectPool<AuthToken> pool) {
+//        krogerApiRepository = new KrogerApiRepository(pool);
+//    }
 
     /**
      * Takes a hashmap of (FilterTerms,String) and returns a list of mapped Products in a list, can be an empty list

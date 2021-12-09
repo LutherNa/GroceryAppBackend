@@ -42,7 +42,8 @@ class LocationServiceTest {
 
     @BeforeEach
     public void setup() throws IOException {
-        locationService = new LocationService(tokenPool);
+//        locationService = new LocationService(tokenPool);
+        locationService = new LocationService();
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(
                 locationService,
