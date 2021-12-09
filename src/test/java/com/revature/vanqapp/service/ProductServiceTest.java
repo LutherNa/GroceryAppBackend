@@ -34,7 +34,8 @@ class ProductServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        productService = new ProductService(tokenPool);
+//        productService = new ProductService(tokenPool);
+        productService = new ProductService();
         ReflectionTestUtils.setField(
                 productService,
                 "krogerApiRepository",

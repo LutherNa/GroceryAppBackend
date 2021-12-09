@@ -39,7 +39,8 @@ class GroceryListServiceTest {
 
     @BeforeEach
     public void setup() throws IOException {
-        groceryListService = new GroceryListService(tokenPool);
+//        groceryListService = new GroceryListService(tokenPool);
+        groceryListService = new GroceryListService();
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(
                 groceryListService,

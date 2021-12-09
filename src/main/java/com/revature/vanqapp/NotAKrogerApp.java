@@ -34,42 +34,42 @@ public class NotAKrogerApp {
 //        tokenPool.setConfig(tokenPoolConfig);
 //    }
 
-    private static void TestOnRun() {
-        ProductService productService = new ProductService(tokenPool);
-        GroceryListService groceryListService;
-        try {
-            groceryListService = new GroceryListService(tokenPool);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        LocationService locationService = new LocationService(tokenPool);
-        HashMap<ProductFilterTerms,String> searchTest = new HashMap<>();
-        searchTest.put(ProductFilterTerms.locationId,"01400943");
-        searchTest.put(ProductFilterTerms.term,"cereal");
-        List<Product> products = null;
-        try {
-            products = productService.getProducts(searchTest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (Product product : products) {
-            System.out.println(product.getDescription()+"\n"+product.getProductId()+"\n"+product.getAisleLocations() +
-                    "\n" + NumberFormat.getCurrencyInstance(Locale.US).format(product.getRegularPrice()));
-        }
-        HashMap<LocationFilterTerms,String> searchLocationTest = new HashMap<>();
-        searchLocationTest.put(LocationFilterTerms.zipCode, "37601");
-        List<Location> locations = null;
-        try {
-            locations = locationService.getLocations(searchLocationTest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for(Location location: locations){
-            System.out.println(location);
-        }
+//    private static void TestOnRun() {
+//        ProductService productService = new ProductService(tokenPool);
+//        GroceryListService groceryListService;
+//        try {
+//            groceryListService = new GroceryListService(tokenPool);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        LocationService locationService = new LocationService(tokenPool);
+//        HashMap<ProductFilterTerms,String> searchTest = new HashMap<>();
+//        searchTest.put(ProductFilterTerms.locationId,"01400943");
+//        searchTest.put(ProductFilterTerms.term,"cereal");
+//        List<Product> products = null;
+//        try {
+//            products = productService.getProducts(searchTest);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        for (Product product : products) {
+//            System.out.println(product.getDescription()+"\n"+product.getProductId()+"\n"+product.getAisleLocations() +
+//                    "\n" + NumberFormat.getCurrencyInstance(Locale.US).format(product.getRegularPrice()));
+//        }
+//        HashMap<LocationFilterTerms,String> searchLocationTest = new HashMap<>();
+//        searchLocationTest.put(LocationFilterTerms.zipCode, "37601");
+//        List<Location> locations = null;
+//        try {
+//            locations = locationService.getLocations(searchLocationTest);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        for(Location location: locations){
+//            System.out.println(location);
+//        }
 //        HashMap<ProductDetailsFilterTerms,String> searchProductInformationTest = new HashMap<>();
 //        searchProductInformationTest.put(ProductDetailsFilterTerms.productId, "0088491201425");
 //        searchProductInformationTest.put(ProductDetailsFilterTerms.locationId, "01400943");
 //        System.out.println(groceryListService.getProductInformation(searchProductInformationTest));
-    }
+//    }
 }

@@ -39,9 +39,9 @@ public class GroceryListService {
      * Constructor that passes an AuthToken pool
      * @param pool the pool is then passed to a Repository
      */
-    public GroceryListService(ObjectPool<AuthToken> pool) throws IOException {
-        this.productService = new ProductService(pool);
-    }
+//    public GroceryListService(ObjectPool<AuthToken> pool) throws IOException {
+//        this.productService = new ProductService(pool);
+//    }
 
     public List<GroceryList> getAllGroceryList(User user){
         return groceryListRepository.findByOwner(user);

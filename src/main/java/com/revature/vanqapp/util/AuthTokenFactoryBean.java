@@ -21,7 +21,7 @@ public class AuthTokenFactoryBean {
     public GenericObjectPool<AuthToken> getAuthTokenPool() {
         GenericObjectPool<AuthToken> tokenPool = new GenericObjectPool<>(new AuthTokenFactory());
         GenericObjectPoolConfig<AuthToken> tokenPoolConfig = new GenericObjectPoolConfig<>();
-        tokenPoolConfig.setMaxTotal(1);
+        tokenPoolConfig.setMaxTotal(10);
         tokenPool.setConfig(tokenPoolConfig);
         return tokenPool;
     }
