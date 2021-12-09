@@ -8,6 +8,7 @@ import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.model.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
+import com.revature.vanqapp.repository.ProductRepository;
 import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ProductService {
 
     @Autowired
     KrogerApiRepository krogerApiRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Autowired
     AuthTokenFactoryBean authTokenFactoryBean;
@@ -93,6 +97,9 @@ public class ProductService {
         return !parseArrayNodeToProducts(getAPISearchResult(searchMap),searchMap).isEmpty();
     }
 
+    public Product deleteProduct(Product product){
+        return productRepository.deleteByProductIdAndLocationId(product.getProductId(), product.getLocationId());
+    }
     /**
      * Takes a hashmap and returns an ArrayNode of Products
      * @param searchMap the hashmap of products using (FilterTerm (enum), String (search term))

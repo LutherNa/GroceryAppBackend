@@ -12,6 +12,7 @@ import com.revature.vanqapp.util.AuthTokenFactoryBean;
 import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,9 +59,14 @@ public class GroceryListService {
         return groceryListRepository.save(new GroceryList(name, locationId, userService.findUserById(userId)));
     }
 
-    public GroceryListProduct viewGroceryList(String name, String locationId, Integer userId){
+    public List<GroceryListProduct> viewGroceryList(String name, String locationId, Integer userId){
         GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         return groceryListProductRepository.findByGroceryList(groceryList);
+    }
+
+    public List<GroceryListProduct> deleteGroceryList(String name, String locationId, Integer userId){
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
 
     public GroceryListProduct addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
@@ -73,13 +79,24 @@ public class GroceryListService {
             groceryListProduct.setProduct(product);
             groceryListProduct.setGroceryList(groceryList);
 
-            List<Product.AisleLocation> aisleLocations = product.getAisleLocations();
-            Product.AisleLocation aisleLocation = aisleLocations.get(0);
-            String aisleNumber = aisleLocation.getNumber();
-
             groceryListProductRepository.save(groceryListProduct);
-            //System.out.println(groceryListProduct);
             return groceryListProduct;
+        }
+        return new GroceryListProduct();
+    }
+
+    public GroceryListProduct deleteProductFromGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
+        Product product = product_list.get(0);
+
+        if (((product.getClass()) == Product.class) && (groceryList.getClass() == GroceryList.class)) {
+            GroceryListProduct groceryListProduct = groceryListProductRepository.findByGroceryListAndProduct(groceryList, product);
+            if (groceryListProductRepository.deleteByGroceryListAndProduct(groceryList, product) == 1){
+                return groceryListProduct;
+            } else{
+                return new GroceryListProduct();
+            }
         }
         return new GroceryListProduct();
     }

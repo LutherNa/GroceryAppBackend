@@ -18,14 +18,19 @@ public class GroceryListController {
     @Autowired
     private GroceryListService groceryListService;
 
+    @GetMapping
+    public List<GroceryList> getAllGroceryList(@RequestBody User user){
+        return groceryListService.getAllGroceryList(user);
+    }
+
+    @GetMapping("/{name}/{locationId}/{userId}")
+    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
+        return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
+    }
+
     @PostMapping("/{name}/{locationId}/{userId}")
     public GroceryList createGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
         return groceryListService.createGroceryList(name, locationId, Integer.parseInt(userId));
-    }
-
-    @PutMapping("/{name}/{locationId}/{userId}")
-    public GroceryListProduct viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
-        return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
     }
 
     @PostMapping("/{name}/{locationId}/{userId}/{productId}")
@@ -36,9 +41,17 @@ public class GroceryListController {
         return groceryListService.addProductToGroceryList(name, Integer.parseInt(userId), searchMap);
     }
 
-    @PutMapping
-    public List<GroceryList> getAllGroceryList(@RequestBody User user){
-        return groceryListService.getAllGroceryList(user);
+    @DeleteMapping("/{name}/{locationId}/{userId}")
+    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
+        return groceryListService.deleteGroceryList(name, locationId, Integer.parseInt(userId));
+    }
+
+    @DeleteMapping("/{name}/{locationId}/{userId}/{productId}")
+    public GroceryListProduct deleteProductFromGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
+        HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
+        searchMap.put(ProductFilterTerms.locationId, locationId);
+        searchMap.put(ProductFilterTerms.productId, productId);
+        return groceryListService.deleteProductFromGroceryList(name, Integer.parseInt(userId), searchMap);
     }
 
 }
