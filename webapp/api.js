@@ -46,14 +46,21 @@ async function searchLocations(locationSearch = {}) {
 }
 // Product Controller
     //API returns list of Product objects or null
-    async function searchProducts(productSearch = {}) {
-        const response = await fetch(apiBaseUrl + '/products', {
-            method: 'POST',
-            body: productSearch,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const myJson = await response.json(); 
-        // parse object search results
-    }
+async function searchProducts(productSearch = {}) {
+    const response = await fetch(apiBaseUrl + '/products', {
+        method: 'POST',
+        body: productSearch,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const myJson = await response.json(); 
+    // parse object search results
+}
+
+// button 
+
+// function locButton () {
+//     locations = searchLocations({"zipCode":"25461"});
+//     document.write(locations);
+// }
