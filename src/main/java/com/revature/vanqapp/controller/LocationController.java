@@ -16,7 +16,7 @@ import java.util.List;
 
 //import static com.revature.vanqapp.NotAKrogerApp.tokenPool;
 
-@RestController() @CrossOrigin
+@RestController()
 @RequestMapping(value = "/location")
 public class LocationController {
 
