@@ -58,6 +58,11 @@ public class GroceryListService {
         return groceryListRepository.save(new GroceryList(name, locationId, userService.findUserById(userId)));
     }
 
+    public GroceryListProduct viewGroceryList(String name, String locationId, Integer userId){
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        return groceryListProductRepository.findByGroceryList(groceryList);
+    }
+
     public GroceryListProduct addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);

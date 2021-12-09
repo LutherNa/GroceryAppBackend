@@ -23,6 +23,11 @@ public class GroceryListController {
         return groceryListService.createGroceryList(name, locationId, Integer.parseInt(userId));
     }
 
+    @PutMapping("/{name}/{locationId}/{userId}")
+    public GroceryListProduct viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
+        return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
+    }
+
     @PostMapping("/{name}/{locationId}/{userId}/{productId}")
     public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
