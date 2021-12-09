@@ -3,6 +3,9 @@ package com.revature.vanqapp.model;
 import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
