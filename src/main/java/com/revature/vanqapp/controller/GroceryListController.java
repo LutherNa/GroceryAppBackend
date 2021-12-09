@@ -24,8 +24,21 @@ public class GroceryListController {
     }
 
     @PutMapping("/{name}/{locationId}/{userId}")
-    public GroceryListProduct viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
+    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
         return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
+    }
+
+    @DeleteMapping("/{name}/{locationId}/{userId}")
+    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
+        return groceryListService.deleteGroceryList(name, locationId, Integer.parseInt(userId));
+    }
+
+    @DeleteMapping("/{name}/{locationId}/{userId}/{productId}")
+    public GroceryListProduct deleteProductFromGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
+        HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
+        searchMap.put(ProductFilterTerms.locationId, locationId);
+        searchMap.put(ProductFilterTerms.productId, productId);
+        return groceryListService.deleteProductFromGroceryList(name, Integer.parseInt(userId), searchMap);
     }
 
     @PostMapping("/{name}/{locationId}/{userId}/{productId}")
