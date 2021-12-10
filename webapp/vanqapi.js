@@ -219,9 +219,11 @@ function signUp() {
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
             console.log(xhr.responseText);
+            user.authorization = xhr.responseText;
+            console.log(user);
         }
     }
-    xhr.open("PUT", apiBaseUrl + "/public/users")
+    xhr.open("POST", apiBaseUrl + "/public/users/register")
     xhr.setRequestHeader("Content-Type","application/json")
     xhr.send(JSON.stringify(newUser)) 
 }
@@ -241,14 +243,14 @@ function signin() {
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
             console.log(xhr.response);
-            //user.loggedIn = JSON.parse(xhr.responseText);
-            //user.authorization = JSON.parse(xhr.getResponseHeader(authorization));
+            user.loggedIn = JSON.parse(xhr.responseText);
+            user.authorization = JSON.parse(xhr.getResponseHeader(authorization));
             console.log(user);
             hide(document.getElementsByClassName("not-logged-in"));
             show(document.getElementsByClassName("logged-in"));
         }
     }
-    xhr.open("POST", apiBaseUrl + "/public/users");
+    xhr.open("POST", apiBaseUrl + "/public/users/login");
     xhr.setRequestHeader("Content-Type","application/json");
     xhr.send(JSON.stringify(verifyUser));
 }
