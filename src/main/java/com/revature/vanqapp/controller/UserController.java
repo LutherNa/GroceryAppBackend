@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@RestController()
+@RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
@@ -17,6 +17,7 @@ public class UserController {
 //    Tutorial has this, not 100% sure what it does for the program - NL
     @GetMapping("/current")
     User getCurrent(@AuthenticationPrincipal User user) {
+        System.out.println(user.toString());
         return user;
     }
 

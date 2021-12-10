@@ -6,7 +6,7 @@ import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController()
+@RestController
 @RequestMapping(value = "/public/users")
 public class PublicUserController {
 
@@ -20,7 +20,7 @@ public class PublicUserController {
         return login(userService.createUser(user));
     }
 
-    @PostMapping(value = "login")
+    @PostMapping(value = "/login")
     public String login(@RequestBody User user) {
         return userService.login(user.getUsername(),user.getPassword())
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
