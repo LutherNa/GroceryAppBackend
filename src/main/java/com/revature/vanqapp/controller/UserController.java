@@ -15,7 +15,7 @@ public class UserController {
     private UserService userService;
 
 //    Tutorial has this, not 100% sure what it does for the program - NL
-    @GetMapping("/current")
+    @PostMapping("/current")
     User getCurrent(@AuthenticationPrincipal User user) {
         System.out.println(user.toString());
         return user;
@@ -32,13 +32,13 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PostMapping
-    public boolean verify(@RequestBody User user){
-        try{
-            return userService.validate(user);
-        } catch (InvalidCredentialsException e){
-            System.out.println("You trying to hack us or something?");
-            return false;
-        }
-    }
+//    @PostMapping
+//    public boolean verify(@RequestBody User user){
+//        try{
+//            return userService.validate(user);
+//        } catch (InvalidCredentialsException e){
+//            System.out.println("You trying to hack us or something?");
+//            return false;
+//        }
+//    }
 }
