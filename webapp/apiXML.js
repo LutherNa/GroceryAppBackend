@@ -1,5 +1,6 @@
 
-const apiBaseUrl = 'http://localhost:8081/api'
+const apiBaseUrl = 'http://localhost:8080/api'
+
 
 $(window, document, undefined).ready(function() {
     $('.input').blur(function() {
@@ -27,6 +28,7 @@ $('#tab2').on('click' , function(){
 
 
 function locButton () {
+  
     getLocations()
 }
 
@@ -66,8 +68,8 @@ function myFunction() {
     }
 }
 
-function renderLocations(locations){
-    while(locationList.firstChild) locationList.removeChild(firstChild);
+function renderLocations(locations) {
+    while (locationList.firstChild) locationList.removeChild(firstChild);
     locations.forEach(location => {
         var hold = document.createElement(location.tag)
         hold.innerHTML = "<p> Name: " + location.name +
@@ -77,20 +79,19 @@ function renderLocations(locations){
     })
 }
 
-function getLocations(){
+function getLocations() {
     let xhr = new XMLHttpRequest(); //Used for sending and receiving requests
-    let data = {"zipCode":"37601"};
+    let data = { "zipCode": "37601" };
 
-    xhr.onreadystatechange = function(){
-        if(this.readyState === XMLHttpRequest.DONE){
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
             console.log(xhr.responseText);
             renderLocations(JSON.parse(xhr.responseText));
         }
     }
-    
+
     xhr.open("POST", apiBaseUrl + "/location")
-    xhr.setRequestHeader("Content-Type","application/json")
+    xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify(data))
 
 }
- 
