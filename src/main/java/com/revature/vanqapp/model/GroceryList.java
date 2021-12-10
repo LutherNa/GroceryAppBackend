@@ -1,11 +1,15 @@
 package com.revature.vanqapp.model;
 
-import com.fasterxml.jackson.annotation.*;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "GroceryLists")
 public class GroceryList {
 
@@ -14,7 +18,7 @@ public class GroceryList {
     private int groceryListId;
 
     @Column(nullable = false)
-    private String name;
+    private String listName;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
@@ -31,9 +35,31 @@ public class GroceryList {
     public GroceryList(){
     }
 
-    public GroceryList(String name, String locationId, User owner){
-        this.name = name;
+    public GroceryList(String listName, String locationId, User owner){
+        this.listName = listName;
         this.locationId = locationId;
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        GroceryList that = (GroceryList) o;
+        return groceryListId != 0 && Objects.equals(groceryListId, that.groceryListId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+
+    public String toString() {
+        return "{groceryListId:" + groceryListId +
+                ",listName:" + listName +
+                ",ownerUsername:" + owner.getUsername() +
+                ",locationId:" + locationId + "}";
     }
 }

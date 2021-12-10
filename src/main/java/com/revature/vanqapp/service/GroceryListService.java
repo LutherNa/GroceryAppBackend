@@ -87,7 +87,7 @@ public class GroceryListService {
     }
 
     public GroceryListProduct deleteProductFromGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
 
