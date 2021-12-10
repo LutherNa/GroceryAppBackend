@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-@RestController()
+@RestController @CrossOrigin("*")
 @RequestMapping(value = "/grocerylist")
 public class GroceryListController {
 
@@ -24,8 +24,8 @@ public class GroceryListController {
     }
 
     @GetMapping("/{name}/{locationId}/{userId}")
-    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
-        return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
+    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String userId){
+        return groceryListService.viewGroceryList(name, Integer.parseInt(userId));
     }
 
     @PostMapping("/{name}/{locationId}/{userId}")
@@ -42,8 +42,8 @@ public class GroceryListController {
     }
 
     @DeleteMapping("/{name}/{locationId}/{userId}")
-    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
-        return groceryListService.deleteGroceryList(name, locationId, Integer.parseInt(userId));
+    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String userId){
+        return groceryListService.deleteGroceryList(name, Integer.parseInt(userId));
     }
 
     @DeleteMapping("/{name}/{locationId}/{userId}/{productId}")

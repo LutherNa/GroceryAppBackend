@@ -6,7 +6,7 @@ import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController @CrossOrigin("*")
 @RequestMapping(value = "/public/users")
 public class PublicUserController {
 
@@ -15,8 +15,6 @@ public class PublicUserController {
 
     @PostMapping(value = "/register")
     public String createUser(@RequestBody User user){
-        user.setUserId(0);
-        user.setGroceryLists(null);
         return login(userService.createUser(user));
     }
 

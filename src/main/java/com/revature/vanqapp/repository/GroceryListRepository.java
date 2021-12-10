@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface GroceryListRepository extends JpaRepository<GroceryList, Integer> {
     List<GroceryList> findByOwner(User user);
-    GroceryList findByOwnerAndName(User user, String name);
+    GroceryList findByOwnerAndListName(User user, String name);
 }

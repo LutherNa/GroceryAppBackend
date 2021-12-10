@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@RestController()
+@RestController @CrossOrigin("*")
 @RequestMapping(value = "/location")
 public class LocationController {
 

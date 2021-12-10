@@ -30,9 +30,8 @@ public class User implements UserDetails {
     @Column
     private String uuid;
 
-    @OneToMany(mappedBy = "owner")
-    @JsonManagedReference
-    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    @JsonManagedReference @JsonIgnore
     private List<GroceryList> groceryLists;
 
 //    Tutorial said I'd need this.
