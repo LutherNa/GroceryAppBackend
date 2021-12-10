@@ -6,7 +6,7 @@ import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController @CrossOrigin("*")
 @RequestMapping(value = "/public/users")
 public class PublicUserController {
 
