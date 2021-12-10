@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -33,6 +35,10 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public Optional<User> findByToken(String token) {
+        return userRepository.findByUuid(token);
+    }
+
     /**
      * Takes a user and returns a boolean if the username AND password matched what is in the database
      * @param user the User to check against the persisted database
@@ -43,5 +49,30 @@ public class UserService {
         return userRepository.findByUsername(user.getUsername()).orElseThrow(InvalidCredentialsException::new)
                 .getPassword()
                 .equals(user.getPassword());
+    }
+
+    /**
+     * Takes user credentials and returns a {@link Optional} of a user when login succeeds.
+     * @param username username
+     * @param password password
+     * @return an {@link Optional} of a user when login succeeds
+     */
+    public Optional<String> login(String username, String password) {
+        String uuid = UUID.randomUUID().toString();
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getPassword().equals(password)){
+                user.setUuid(uuid);
+                userRepository.save(user);
+                return Optional.of(uuid);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void logout(User user) {
+        user.setUuid(null);
+        userRepository.save(user);
     }
 }
