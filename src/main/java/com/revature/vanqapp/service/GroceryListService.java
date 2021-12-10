@@ -57,17 +57,17 @@ public class GroceryListService {
     }
 
     public List<GroceryListProduct> viewGroceryList(String name, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         return groceryListProductRepository.findByGroceryList(groceryList);
     }
 
     public List<GroceryListProduct> deleteGroceryList(String name, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
 
     public GroceryListProduct addProductToGroceryList(String name, Integer userId, Integer count, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
 
