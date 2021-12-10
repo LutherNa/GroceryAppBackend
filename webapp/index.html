@@ -6,10 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type = "text/javascript" src="apiXML.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script type = "text/javascript" src="vanqapi.js"></script>
+    <link rel="stylesheet" href="vanq.css">
+</head>
 <body>
-    <input type="button" id='buttonapi' value = "LocationTest" onclick="locButton();">
-    <div id="locationList"></div>
+    <nav class="main-nav">
+        <ul>
+            <div class="logged-in" style="display:none;">      
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li style="float:right"><a href="#about">About</a></li>
+                <li style="float:right"><a href=#logout>Logout</a></li>
+            </div>
+            <!-- inser more links here -->
+            <div class="not-logged-in">
+                <li><a class="cd-signin" href="#0">Sign in</a></li>
+                <li><a class="cd-signup" href="#0">Sign up</a></li>
+            </div>
+        </ul>
+    </nav>
+</header>
+
+    <div class="cd-user-modal"> <!-- this is the entire modal form-->
+        <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+            <ul class="cd-switcher">
+                <li><a href="#0">Sign in</a></li>
+                <li><a href="#0">New account</a></li>
+            </ul>
+
+            <div id="cd-login"> <!-- log in form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signin-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="Username">
+                        <!-- Unused login Error <span class="cd-error-message">Error message here!</span>-->
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
+                        <a href="#0" class="hide-password">Hide</a>
+                        <!-- Unused login Error <span class="cd-error-message">Error message here!</span>-->
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width" type="submit" value="Login">
+                    </p>
+                </form>
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-login -->
+
+            <div id="cd-signup"> <!-- sign up form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+                        <!-- Unused login Error <span class="cd-error-message">Error message here!</span>-->
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+                        <a href="#0" class="hide-password">Hide</a>
+                        <!-- Unused login Error <span class="cd-error-message">Error message here!</span>-->
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Create account">
+                    </p>
+                </form>
+
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-signup -->
+            <a href="#0" class="cd-close-form">Close</a>
+        </div> <!-- cd-user-modal-container -->
+    </div> <!-- cd-user-modal -->
 </body>
 </html>
