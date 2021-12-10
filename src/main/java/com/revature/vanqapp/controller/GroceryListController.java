@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-@RestController()
+@RestController @CrossOrigin("*")
 @RequestMapping(value = "/grocerylist")
 public class GroceryListController {
 
