@@ -1,6 +1,5 @@
 package com.revature.vanqapp.service;
 
-import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.GroceryList;
 import com.revature.vanqapp.model.GroceryListProduct;
 import com.revature.vanqapp.model.User;
@@ -9,10 +8,8 @@ import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.repository.GroceryListProductRepository;
 import com.revature.vanqapp.repository.GroceryListRepository;
 import com.revature.vanqapp.util.AuthTokenFactoryBean;
-import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,17 +57,17 @@ public class GroceryListService {
     }
 
     public List<GroceryListProduct> viewGroceryList(String name, String locationId, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         return groceryListProductRepository.findByGroceryList(groceryList);
     }
 
     public List<GroceryListProduct> deleteGroceryList(String name, String locationId, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
 
     public GroceryListProduct addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
 
@@ -86,7 +83,7 @@ public class GroceryListService {
     }
 
     public GroceryListProduct deleteProductFromGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
+        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
 

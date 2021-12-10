@@ -15,8 +15,6 @@ public class PublicUserController {
 
     @PostMapping(value = "/register")
     public String createUser(@RequestBody User user){
-        user.setUserId(0);
-        user.setGroceryLists(null);
         return login(userService.createUser(user));
     }
 
