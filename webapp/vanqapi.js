@@ -1,8 +1,8 @@
 
 const apiBaseUrl = 'http://localhost:8081/api'
+
 const user = {
     idNum:undefined,
-    loggedIn:false,
     authorization:true,
     locationId:undefined,
     groceryListId:undefined
@@ -102,6 +102,11 @@ jQuery(document).ready(function($){
     $logout.on('click', function(event) {
 		if( $(event.target).is($logout) ) {
 			logout();
+        }
+    });
+
+    $locations.on('click', function(event) {
+		if( $(event.target).is($locations) ) {
         }
     });
 
@@ -209,18 +214,15 @@ jQuery.fn.putCursorAtEnd = function() {
 
 function signUp() {   
     let xhr = new XMLHttpRequest(); //Used for sending and receiving requests
-    var formElement = document.querySelector("cd-form");
-    var un = document.getElementById("signup-username").value;
-    var pw = document.getElementById("signup-password").value;
     var newUser = {
-        username:un,
-        password:pw
+        username:document.getElementById("signup-username").value,
+        password:document.getElementById("signup-password").value,
     }
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
-            console.log(xhr.responseText);
             user.authorization = xhr.responseText;
-            console.log(user);
+            hide(document.getElementsByClassName("not-logged-in"));
+            show(document.getElementsByClassName("logged-in"));
         }
     }
     xhr.open("POST", apiBaseUrl + "/public/users/register")
@@ -236,16 +238,12 @@ function signin() {
         username:un,
         password:pw
     }
-
-//Testing purposes, DO REMOVE
+    //Testing purposes, DO REMOVE
     hide(document.getElementsByClassName("not-logged-in"));
     show(document.getElementsByClassName("logged-in"));
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
-            console.log(xhr.response);
-            user.loggedIn = JSON.parse(xhr.responseText);
-            user.authorization = JSON.parse(xhr.getResponseHeader(authorization));
-            console.log(user);
+            user.authorization = xhr.responseText;
             hide(document.getElementsByClassName("not-logged-in"));
             show(document.getElementsByClassName("logged-in"));
         }
@@ -256,6 +254,19 @@ function signin() {
 }
 
 function logout() {
+    let xhr = new XMLHttpRequest(); //Used for sending and receiving requests
+    xhr.onreadystatechange = function(){
+        if(this.readyState === XMLHttpRequest.DONE){
+            for (const key in user) {
+                if (Object.hasOwnProperty.call(user, key)) {
+                    user[key] = undefined;
+                }
+            }
+        }
+    }
+    xhr.open("GET", apiBaseUrl + "/users/logout");
+    xhr = prepXHRHeader(xhr);
+    xhr.send() ;
     user.loggedIn = false;
     $("body").replaceWith("");
     hide(document.getElementsByClassName("logged-in"));
