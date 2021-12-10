@@ -69,7 +69,7 @@ public class GroceryListService {
         return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
 
-    public GroceryListProduct addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
+    public GroceryListProduct addProductToGroceryList(String name, Integer userId, Integer count, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
@@ -78,9 +78,13 @@ public class GroceryListService {
             GroceryListProduct groceryListProduct = new GroceryListProduct();
             groceryListProduct.setProduct(product);
             groceryListProduct.setGroceryList(groceryList);
-
-            groceryListProductRepository.save(groceryListProduct);
-            return groceryListProduct;
+            if(count > 0){
+                groceryListProduct.setQuantity(count);
+                groceryListProductRepository.save(groceryListProduct);
+                return groceryListProduct;
+            } else{
+                return new GroceryListProduct();
+            }
         }
         return new GroceryListProduct();
     }

@@ -1,7 +1,7 @@
 
-const apiBaseUrl = 'http://localhost:8081/api'
+const apiBaseUrl = 'http://localhost:8080/api'
 
-function locButton () {
+function locButton() {
     getLocations()
     //$("button").on("click",function(){
     //console.log("hii");
@@ -28,8 +28,8 @@ function locButton () {
 
 }
 
-function renderLocations(locations){
-    while(locationList.firstChild) locationList.removeChild(firstChild);
+function renderLocations(locations) {
+    while (locationList.firstChild) locationList.removeChild(firstChild);
     locations.forEach(location => {
         var hold = document.createElement(location.tag)
         hold.innerHTML = "<p> Name: " + location.name + ", Address: " + location.address.addressLine1 + " " + location.address.city + "</p>";
@@ -38,40 +38,39 @@ function renderLocations(locations){
     })
 }
 
-function getLocations(){
+function getLocations() {
     let xhr = new XMLHttpRequest(); //Used for sending and receiving requests
-    let data = {"zipCode":"37601"};
+    let data = { "zipCode": "37601" };
 
-    xhr.onreadystatechange = function(){
-        if(this.readyState === XMLHttpRequest.DONE){
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
             console.log(xhr.responseText);
             renderLocations(JSON.parse(xhr.responseText));
         }
     }
-    
+
     xhr.open("POST", apiBaseUrl + "/location")
-    xhr.setRequestHeader("Content-Type","application/json")
+    xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify(data))
 
 }
 
-function buildLocations(tree, container) {  
-    tree.forEach(function(node) {
-  
-      var el = document.createElement(node.tag);
-  
-      if (Array.isArray(node.content)) {
-          buildLocations(node.content, el);
-      } 
-      else if (typeof(node.content) == 'object') {
-          buildLocations([node.content], el);
-      }
-      else {
-          el.innerHTML = node.content;
-      }
-  
-      container.appendChild(el);
+function buildLocations(tree, container) {
+    tree.forEach(function (node) {
+
+        var el = document.createElement(node.tag);
+
+        if (Array.isArray(node.content)) {
+            buildLocations(node.content, el);
+        }
+        else if (typeof (node.content) == 'object') {
+            buildLocations([node.content], el);
+        }
+        else {
+            el.innerHTML = node.content;
+        }
+
+        container.appendChild(el);
     });
 }
 
- 
