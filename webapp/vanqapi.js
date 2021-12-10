@@ -1,9 +1,8 @@
 
 const apiBaseUrl = 'http://localhost:8081/api'
-
 const user = {
     idNum:undefined,
-    authorization:true,
+    uuid:true,
     locationId:undefined,
     groceryListId:undefined
 };
@@ -102,11 +101,6 @@ jQuery(document).ready(function($){
     $logout.on('click', function(event) {
 		if( $(event.target).is($logout) ) {
 			logout();
-        }
-    });
-
-    $locations.on('click', function(event) {
-		if( $(event.target).is($locations) ) {
         }
     });
 
@@ -220,7 +214,9 @@ function signUp() {
     }
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
-            user.authorization = xhr.responseText;
+            console.log(xhr.responseText);
+            user.idNum = JSON.parse(xhr.responseText).idNum;
+            user.uuid = JSON.parse(xhr.responseText).uuid;
             hide(document.getElementsByClassName("not-logged-in"));
             show(document.getElementsByClassName("logged-in"));
         }
@@ -243,7 +239,8 @@ function signin() {
     show(document.getElementsByClassName("logged-in"));
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
-            user.authorization = xhr.responseText;
+            user.idNum = JSON.parse(xhr.responseText).idNum;
+            user.uuid = JSON.parse(xhr.responseText).uuid;
             hide(document.getElementsByClassName("not-logged-in"));
             show(document.getElementsByClassName("logged-in"));
         }
@@ -289,6 +286,6 @@ function show (elements) {
 
 function prepXHRHeader(xhr){
     xhr.setRequestHeader("Content-Type","application/json")
-    xhr.setRequestHeader("Authorization",user.authorization)
+    xhr.setRequestHeader("Authorization",user.uuid)
     return xhr;
 }
