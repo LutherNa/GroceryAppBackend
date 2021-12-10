@@ -14,12 +14,12 @@ public class PublicUserController {
     private UserService userService;
 
     @PostMapping(value = "/register")
-    public String createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user){
         return login(userService.createUser(user));
     }
 
     @PostMapping(value = "/login")
-    public String login(@RequestBody User user) {
+    public User login(@RequestBody User user) {
         return userService.login(user.getUsername(),user.getPassword())
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }

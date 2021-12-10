@@ -57,7 +57,7 @@ public class UserService {
      * @param password password
      * @return an {@link Optional} of a user when login succeeds
      */
-    public Optional<String> login(String username, String password) {
+    public Optional<User> login(String username, String password) {
         String uuid = UUID.randomUUID().toString();
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
@@ -65,7 +65,7 @@ public class UserService {
             if (user.getPassword().equals(password)){
                 user.setUuid(uuid);
                 userRepository.save(user);
-                return Optional.of(uuid);
+                return Optional.of(user);
             }
         }
         return Optional.empty();
