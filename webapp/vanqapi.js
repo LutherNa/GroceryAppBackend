@@ -3,7 +3,9 @@ const apiBaseUrl = 'http://localhost:8081/api'
 const user = {
     idNum:undefined,
     loggedIn:false,
-    authorization:undefined
+    authorization:true,
+    locationId:undefined,
+    groceryListId:undefined
 };
 
 // function tokenPersistanceFunction(updatedOauth){
@@ -60,6 +62,13 @@ const user = {
 //         });
 // };
 
+/**
+ * 
+                <li><a class="locations" href="#0">Location</a></li>
+                <li><a class="grocery-lists" href="#0">Grocery Lists</a></li>
+                <li><a class="products" href="#0">Products</a></li>
+ */
+
 jQuery(document).ready(function($){
 	var $form_modal = $('.cd-user-modal'),
 		$form_login = $form_modal.find('#cd-login'),
@@ -68,9 +77,11 @@ jQuery(document).ready(function($){
 		$form_modal_tab = $('.cd-switcher'),
 		$tab_login = $form_modal_tab.children('li').eq(0).children('a'),
 		$tab_signup = $form_modal_tab.children('li').eq(1).children('a'),
-		$forgot_password_link = $form_login.find('.cd-form-bottom-message a'),
-		$back_to_login_link = $form_forgot_password.find('.cd-form-bottom-message a'),
-		$main_nav = $('.main-nav');
+		$main_nav = $('.not-logged-in');
+        $locations = $('.locations');
+        $grocery_lists = $('.grocery-lists');
+        $products = $('.products');
+        $logout = $('.logout');
 
 	//open modal
 	$main_nav.on('click', function(event){
@@ -87,6 +98,12 @@ jQuery(document).ready(function($){
 		}
 
 	});
+
+    $logout.on('click', function(event) {
+		if( $(event.target).is($logout) ) {
+			logout();
+        }
+    });
 
 	//close modal
 	$('.cd-user-modal').on('click', function(event){
@@ -118,17 +135,7 @@ jQuery(document).ready(function($){
 		$password_field.putCursorAtEnd();
 	});
 
-	//show forgot-password form 
-	$forgot_password_link.on('click', function(event){
-		event.preventDefault();
-		forgot_password_selected();
-	});
 
-	//back to login from the forgot-password form
-	$back_to_login_link.on('click', function(event){
-		event.preventDefault();
-		login_selected();
-	});
 
 	function login_selected(){
 		$form_login.addClass('is-selected');
@@ -212,9 +219,11 @@ function signUp() {
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
             console.log(xhr.responseText);
+            user.authorization = xhr.responseText;
+            console.log(user);
         }
     }
-    xhr.open("PUT", apiBaseUrl + "/public/users")
+    xhr.open("POST", apiBaseUrl + "/public/users/register")
     xhr.setRequestHeader("Content-Type","application/json")
     xhr.send(JSON.stringify(newUser)) 
 }
@@ -227,6 +236,10 @@ function signin() {
         username:un,
         password:pw
     }
+
+//Testing purposes, DO REMOVE
+    hide(document.getElementsByClassName("not-logged-in"));
+    show(document.getElementsByClassName("logged-in"));
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
             console.log(xhr.response);
@@ -237,14 +250,14 @@ function signin() {
             show(document.getElementsByClassName("logged-in"));
         }
     }
-    xhr.open("POST", apiBaseUrl + "/public/users");
+    xhr.open("POST", apiBaseUrl + "/public/users/login");
     xhr.setRequestHeader("Content-Type","application/json");
     xhr.send(JSON.stringify(verifyUser));
 }
 
 function logout() {
     user.loggedIn = false;
-    showNoUser();
+    $("body").replaceWith("");
     hide(document.getElementsByClassName("logged-in"));
     show(document.getElementsByClassName("not-logged-in"));
 }
