@@ -1,5 +1,10 @@
 
 const apiBaseUrl = 'http://localhost:8081/api'
+const user = {
+    idNum:undefined,
+    loggedIn:false,
+    authorization:undefined
+};
 
 // function tokenPersistanceFunction(updatedOauth){
 //     // Here you will get Updated Oauth values 
@@ -140,13 +145,6 @@ jQuery(document).ready(function($){
 		$tab_login.removeClass('selected');
 		$tab_signup.addClass('selected');
 	}
-
-	function forgot_password_selected(){
-		$form_login.removeClass('is-selected');
-		$form_signup.removeClass('is-selected');
-		$form_forgot_password.addClass('is-selected');
-	}
-
 	//Submission of the login/signup page 
 	$form_login.find('input[type="submit"]').on('click', function(event){
 
@@ -207,7 +205,7 @@ function signUp() {
     var formElement = document.querySelector("cd-form");
     var un = document.getElementById("signup-username").value;
     var pw = document.getElementById("signup-password").value;
-    var user = {
+    var newUser = {
         username:un,
         password:pw
     }
@@ -216,25 +214,57 @@ function signUp() {
             console.log(xhr.responseText);
         }
     }
-    xhr.open("PUT", apiBaseUrl + "/users")
+    xhr.open("PUT", apiBaseUrl + "/public/users")
     xhr.setRequestHeader("Content-Type","application/json")
-    xhr.send(JSON.stringify(user)) 
+    xhr.send(JSON.stringify(newUser)) 
 }
 
 function signin() {   
     let xhr = new XMLHttpRequest(); //Used for sending and receiving requests
     var un = document.getElementById("signin-username").value;
     var pw = document.getElementById("signin-password").value;
-    var user = {
+    var verifyUser = {
         username:un,
         password:pw
     }
     xhr.onreadystatechange = function(){
         if(this.readyState === XMLHttpRequest.DONE){
-            console.log(xhr.responseText);
+            console.log(xhr.response);
+            user.loggedIn = JSON.parse(xhr.responseText);
+            user.authorization = JSON.parse(xhr.getResponseHeader(authorization));
+            console.log(user);
+            hide(document.getElementsByClassName("not-logged-in"));
+            show(document.getElementsByClassName("logged-in"));
         }
     }
-    xhr.open("POST", apiBaseUrl + "/users")
+    xhr.open("POST", apiBaseUrl + "/public/users");
+    xhr.setRequestHeader("Content-Type","application/json");
+    xhr.send(JSON.stringify(verifyUser));
+}
+
+function logout() {
+    user.loggedIn = false;
+    showNoUser();
+    hide(document.getElementsByClassName("logged-in"));
+    show(document.getElementsByClassName("not-logged-in"));
+}
+
+function hide (elements) {
+    elements = elements.length ? elements : [elements];
+    for (var index = 0; index < elements.length; index++) {
+      elements[index].style.display = 'none';
+    }
+}
+
+function show (elements) {
+    elements = elements.length ? elements : [elements];
+    for (var index = 0; index < elements.length; index++) {
+      elements[index].style.display = 'block';
+    }
+}
+
+function prepXHRHeader(xhr){
     xhr.setRequestHeader("Content-Type","application/json")
-    xhr.send(JSON.stringify(user)) 
+    xhr.setRequestHeader("Authorization",user.authorization)
+    return xhr;
 }
