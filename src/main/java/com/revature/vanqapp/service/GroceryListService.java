@@ -1,6 +1,5 @@
 package com.revature.vanqapp.service;
 
-import com.revature.vanqapp.model.AuthToken;
 import com.revature.vanqapp.model.GroceryList;
 import com.revature.vanqapp.model.GroceryListProduct;
 import com.revature.vanqapp.model.User;
@@ -9,10 +8,8 @@ import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.repository.GroceryListProductRepository;
 import com.revature.vanqapp.repository.GroceryListRepository;
 import com.revature.vanqapp.util.AuthTokenFactoryBean;
-import org.apache.commons.pool2.ObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,12 +56,12 @@ public class GroceryListService {
         return groceryListRepository.save(new GroceryList(name, locationId, userService.findUserById(userId)));
     }
 
-    public List<GroceryListProduct> viewGroceryList(String name, String locationId, Integer userId){
+    public List<GroceryListProduct> viewGroceryList(String name, Integer userId){
         GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         return groceryListProductRepository.findByGroceryList(groceryList);
     }
 
-    public List<GroceryListProduct> deleteGroceryList(String name, String locationId, Integer userId){
+    public List<GroceryListProduct> deleteGroceryList(String name, Integer userId){
         GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
