@@ -33,12 +33,12 @@ public class GroceryListController {
         return groceryListService.createGroceryList(name, locationId, Integer.parseInt(userId));
     }
 
-    @PostMapping("/{name}/{locationId}/{userId}/{productId}")
-    public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
+    @PostMapping("/{name}/{locationId}/{userId}/{productId}/{count}")
+    public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId, @PathVariable String count) throws IOException {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
         searchMap.put(ProductFilterTerms.locationId, locationId);
         searchMap.put(ProductFilterTerms.productId, productId);
-        return groceryListService.addProductToGroceryList(name, Integer.parseInt(userId), searchMap);
+        return groceryListService.addProductToGroceryList(name, Integer.parseInt(userId), Integer.parseInt(count),  searchMap);
     }
 
     @DeleteMapping("/{name}/{locationId}/{userId}")

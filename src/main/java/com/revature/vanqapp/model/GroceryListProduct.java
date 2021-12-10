@@ -22,6 +22,6 @@ public class GroceryListProduct {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumns({@JoinColumn(name = "productId"), @JoinColumn(name = "locationId")})
     private Product product;
-    private int quantity = 1;
+    private int quantity;
 
 }
