@@ -24,8 +24,8 @@ public class GroceryListController {
     }
 
     @GetMapping("/{name}/{locationId}/{userId}")
-    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
-        return groceryListService.viewGroceryList(name, locationId, Integer.parseInt(userId));
+    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @PathVariable String userId){
+        return groceryListService.viewGroceryList(name, Integer.parseInt(userId));
     }
 
     @PostMapping("/{name}/{locationId}/{userId}")
@@ -33,17 +33,17 @@ public class GroceryListController {
         return groceryListService.createGroceryList(name, locationId, Integer.parseInt(userId));
     }
 
-    @PostMapping("/{name}/{locationId}/{userId}/{productId}")
-    public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId) throws IOException {
+    @PostMapping("/{name}/{locationId}/{userId}/{productId}/{count}")
+    public GroceryListProduct addProductToGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId, @PathVariable String productId, @PathVariable String count) throws IOException {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
         searchMap.put(ProductFilterTerms.locationId, locationId);
         searchMap.put(ProductFilterTerms.productId, productId);
-        return groceryListService.addProductToGroceryList(name, Integer.parseInt(userId), searchMap);
+        return groceryListService.addProductToGroceryList(name, Integer.parseInt(userId), Integer.parseInt(count),  searchMap);
     }
 
     @DeleteMapping("/{name}/{locationId}/{userId}")
-    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String locationId, @PathVariable String userId){
-        return groceryListService.deleteGroceryList(name, locationId, Integer.parseInt(userId));
+    public List<GroceryListProduct> deleteGroceryList (@PathVariable String name, @PathVariable String userId){
+        return groceryListService.deleteGroceryList(name, Integer.parseInt(userId));
     }
 
     @DeleteMapping("/{name}/{locationId}/{userId}/{productId}")

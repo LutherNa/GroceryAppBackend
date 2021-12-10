@@ -56,18 +56,18 @@ public class GroceryListService {
         return groceryListRepository.save(new GroceryList(name, locationId, userService.findUserById(userId)));
     }
 
-    public List<GroceryListProduct> viewGroceryList(String name, String locationId, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
+    public List<GroceryListProduct> viewGroceryList(String name, Integer userId){
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         return groceryListProductRepository.findByGroceryList(groceryList);
     }
 
-    public List<GroceryListProduct> deleteGroceryList(String name, String locationId, Integer userId){
-        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
+    public List<GroceryListProduct> deleteGroceryList(String name, Integer userId){
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         return groceryListProductRepository.deleteAllByGroceryList(groceryList);
     }
 
-    public GroceryListProduct addProductToGroceryList(String name, Integer userId, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
-        GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
+    public GroceryListProduct addProductToGroceryList(String name, Integer userId, Integer count, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
+        GroceryList groceryList = groceryListRepository.findByOwnerAndName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
         Product product = product_list.get(0);
 
@@ -75,9 +75,13 @@ public class GroceryListService {
             GroceryListProduct groceryListProduct = new GroceryListProduct();
             groceryListProduct.setProduct(product);
             groceryListProduct.setGroceryList(groceryList);
-
-            groceryListProductRepository.save(groceryListProduct);
-            return groceryListProduct;
+            if(count > 0){
+                groceryListProduct.setQuantity(count);
+                groceryListProductRepository.save(groceryListProduct);
+                return groceryListProduct;
+            } else{
+                return new GroceryListProduct();
+            }
         }
         return new GroceryListProduct();
     }
