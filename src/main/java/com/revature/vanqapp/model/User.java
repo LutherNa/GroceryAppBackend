@@ -27,9 +27,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column
-    private String uuid;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     @JsonManagedReference @JsonIgnore
     private List<GroceryList> groceryLists;

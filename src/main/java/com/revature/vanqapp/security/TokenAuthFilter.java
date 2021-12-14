@@ -1,6 +1,8 @@
 package com.revature.vanqapp.security;
 
+import com.revature.vanqapp.util.JwtUtil;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +20,13 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+//@FieldDefaults(level = PRIVATE, makeFinal = true)
+@FieldDefaults(level = PRIVATE)
 final class TokenAuthFilter extends AbstractAuthenticationProcessingFilter {
     private static final String BEARER = "Bearer";
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     TokenAuthFilter(final RequestMatcher requiresAuth) {
         super(requiresAuth);
@@ -28,17 +34,17 @@ final class TokenAuthFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(
-            final HttpServletRequest request,
-            final HttpServletResponse response) {
-        final String param = ofNullable(request.getHeader(AUTHORIZATION))
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        String param = ofNullable(request.getHeader(AUTHORIZATION))
                 .orElse(request.getParameter("t"));
 
-        final String token = ofNullable(param)
+        String token = ofNullable(param)
                 .map(value -> removeStart(value, BEARER))
                 .map(String::trim)
                 .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
 
-        final Authentication auth = new UsernamePasswordAuthenticationToken(token, token);
+        Authentication auth = new UsernamePasswordAuthenticationToken(jwtUtil.extractUsername(token), jwtUtil.extractUsername(token));
         return getAuthenticationManager().authenticate(auth);
     }
 

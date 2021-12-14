@@ -1,28 +1,37 @@
 package com.revature.vanqapp.service;
 
-import com.revature.vanqapp.model.GroceryList;
 import com.revature.vanqapp.model.User;
+import com.revature.vanqapp.model.UserAuthRequest;
 import com.revature.vanqapp.repository.UserRepository;
+import com.revature.vanqapp.util.JwtUtil;
 import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    public User createUser(User user) {
+        return createUser(new UserAuthRequest(user.getUsername(),user.getPassword()));
+    }
 
     /**
      * Takes a user persists it then returns the user
-     * @param user The user that is going to be created
+     * @param userAuthRequest The Auth Request corresponding to the user that is going to be created
      * @return the full user object that was persisted is returned.
      */
-    public User createUser(User user){
+    public User createUser(UserAuthRequest userAuthRequest){
+        User user = new User();
+        user.setUsername(userAuthRequest.getUsername());
+        user.setPassword(userAuthRequest.getPassword());
         return userRepository.save(user);
     }
 
@@ -36,7 +45,7 @@ public class UserService {
     }
 
     public Optional<User> findByToken(String token) {
-        return userRepository.findByUuid(token);
+        return userRepository.findByUsername(jwtUtil.extractUsername(token));
     }
 
     /**
@@ -51,28 +60,21 @@ public class UserService {
                 .equals(user.getPassword());
     }
 
-    /**
-     * Takes user credentials and returns a {@link Optional} of a user when login succeeds.
-     * @param username username
-     * @param password password
-     * @return an {@link Optional} of a user when login succeeds
+    /** implementation of UserDetailsService method for Spring Security.
+     *
+     * @param username Username expected to be in database.
+     * @return User object from database.
+     * @throws UsernameNotFoundException Throws exception on empty optional from repository.
      */
-    public Optional<String> login(String username, String password) {
-        String uuid = UUID.randomUUID().toString();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            if (user.getPassword().equals(password)){
-                user.setUuid(uuid);
-                userRepository.save(user);
-                return Optional.of(uuid);
-            }
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return user.get();
         }
-        return Optional.empty();
-    }
-
-    public void logout(User user) {
-        user.setUuid(null);
-        userRepository.save(user);
+        else {
+//            This feels ugly. - NL
+            throw new UsernameNotFoundException("Username Not Found");
+        }
     }
 }
