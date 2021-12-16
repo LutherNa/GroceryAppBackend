@@ -28,11 +28,16 @@ public class UserService implements UserDetailsService {
      * @param userAuthRequest The Auth Request corresponding to the user that is going to be created
      * @return the full user object that was persisted is returned.
      */
-    public User createUser(UserAuthRequest userAuthRequest){
-        User user = new User();
-        user.setUsername(userAuthRequest.getUsername());
-        user.setPassword(userAuthRequest.getPassword());
-        return userRepository.save(user);
+    public User createUser(UserAuthRequest userAuthRequest) throws IllegalArgumentException {
+        if (userRepository.existsByUsername(userAuthRequest.getUsername()) || userAuthRequest.getUsername() == null) {
+            throw new IllegalArgumentException("Username Not Valid");
+        }
+        else {
+            User user = new User();
+            user.setUsername(userAuthRequest.getUsername());
+            user.setPassword(userAuthRequest.getPassword());
+            return userRepository.save(user);
+        }
     }
 
     /**
@@ -44,8 +49,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public Optional<User> findByToken(String token) {
-        return userRepository.findByUsername(jwtUtil.extractUsername(token));
+    public User findByToken(String token) throws Exception {
+        Optional<User> user = userRepository.findByUsername(jwtUtil.extractUsername(token));
+        if (user.isPresent()) {
+            return user.get();
+        }
+        else {
+            throw new Exception("Token Does Not Correspond to User");
+        }
     }
 
     /**

@@ -28,15 +28,15 @@ public class UserController {
      */
     @GetMapping("/current")
     ResponseEntity<?> getCurrent(@RequestHeader("Authorization") String token) {
-        String tokenParsed = token.replace("Bearer","").trim();
-        Optional<User> user = userService.findByToken(tokenParsed);
+        String tokenParsed = token.replace("Bearer", "").trim();
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setBearerAuth(tokenParsed);
-        if (user.isPresent()) {
-            return new ResponseEntity<User>(user.get(), responseHeaders, HttpStatus.CREATED);
-        }
-        else {
-            return new ResponseEntity<String>("User Not Found", responseHeaders, HttpStatus.NOT_FOUND);
+        try {
+            User user = userService.findByToken(tokenParsed);
+            user.setPassword(null);
+            return new ResponseEntity<User>(user, responseHeaders, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.toString(), responseHeaders, HttpStatus.NOT_FOUND);
         }
     }
 }

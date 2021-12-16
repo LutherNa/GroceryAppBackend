@@ -8,6 +8,8 @@ import com.revature.vanqapp.service.UserService;
 import com.revature.vanqapp.util.JwtUtil;
 import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,9 +35,18 @@ public class PublicUserController {
      * @throws Exception Throws BadCredentialsException on login failure.
      */
     @PostMapping(value = "/register")
-    public ResponseEntity<?> createUser(@RequestBody UserAuthRequest userAuthRequest) throws Exception {
-        User user = userService.createUser(userAuthRequest);
-        return login(userAuthRequest);
+    public ResponseEntity<?> createUser(@RequestBody UserAuthRequest userAuthRequest) throws IllegalArgumentException {
+        try {
+            if (userAuthRequest.getPassword() != null && userAuthRequest.getPassword().length() > 6) {
+                User user = userService.createUser(userAuthRequest);
+                return login(userAuthRequest);
+            }
+            else {
+                return new ResponseEntity<>("Minimum Password Length 7 Characters", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.toString(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -45,13 +56,13 @@ public class PublicUserController {
      * @throws Exception Throws BadCredentialsException on login failure.
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody UserAuthRequest userAuthRequest) throws Exception {
+    public ResponseEntity<?> login(@RequestBody UserAuthRequest userAuthRequest) {
         try {
             tokenAuthProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(userAuthRequest.getUsername(), userAuthRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            return new ResponseEntity<String>("Incorrect username or password", new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
         final User user = userService
                 .loadUserByUsername(userAuthRequest.getUsername());
