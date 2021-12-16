@@ -7,6 +7,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
+import java.security.SignatureException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;

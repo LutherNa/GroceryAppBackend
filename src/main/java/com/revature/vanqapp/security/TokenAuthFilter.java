@@ -1,5 +1,6 @@
 package com.revature.vanqapp.security;
 
+import com.revature.vanqapp.service.UserService;
 import com.revature.vanqapp.util.JwtUtil;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
@@ -27,6 +29,8 @@ final class TokenAuthFilter extends AbstractAuthenticationProcessingFilter {
 
     @Autowired
     JwtUtil jwtUtil;
+    @Autowired
+    UserService userService;
 
     TokenAuthFilter(final RequestMatcher requiresAuth) {
         super(requiresAuth);
@@ -43,9 +47,14 @@ final class TokenAuthFilter extends AbstractAuthenticationProcessingFilter {
                 .map(value -> removeStart(value, BEARER))
                 .map(String::trim)
                 .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
-
-        Authentication auth = new UsernamePasswordAuthenticationToken(jwtUtil.extractUsername(token), jwtUtil.extractUsername(token));
-        return getAuthenticationManager().authenticate(auth);
+        Authentication auth = new PreAuthenticatedAuthenticationToken(jwtUtil.extractUsername(token),token);
+        if (jwtUtil.validateToken(token,userService.loadUserByUsername(jwtUtil.extractUsername(token)))) {
+            auth.setAuthenticated(true);
+        }
+        else {
+            auth.setAuthenticated(false);
+        }
+        return auth;
     }
 
     @Override
