@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
+import com.revature.vanqapp.model.Location;
 import com.revature.vanqapp.model.ProductFilterTerms;
 import com.revature.vanqapp.model.Product;
 import com.revature.vanqapp.repository.KrogerApiRepository;
@@ -105,7 +106,7 @@ public class ProductService {
      * @param searchMap the hashmap of products using (FilterTerm (enum), String (search term))
      * @return Returns an Arraynode of all matching Products in Json format
      */
-    private ArrayNode getAPISearchResult(HashMap<ProductFilterTerms,String> searchMap){
+    private JsonNode getAPISearchResult(HashMap<ProductFilterTerms,String> searchMap){
         String searchBuilder = searchMap.keySet().stream().map(term -> "filter." + term + "=" + searchMap.get(term) + "&")
                 .collect(Collectors.joining("", "https://api.kroger.com/v1/products?", ""));
         searchBuilder = searchBuilder.substring(0,searchBuilder.length()-1);
@@ -114,19 +115,22 @@ public class ProductService {
 
     /**
      * Takes an ArrayNode of products and returns a list of products mapped to the Product class
-     * @param arrayNode an ArrayNode of products in json format
+     * @param jsonNode an ArrayNode of products in json format
      * @return returns a list of Product
      * @throws JsonProcessingException if unable to map the Json to Products or the Json is improperly formatted
      */
-    private List<Product> parseArrayNodeToProducts(ArrayNode arrayNode, HashMap<ProductFilterTerms,String> searchMap) throws JsonProcessingException {
+    private List<Product> parseArrayNodeToProducts(JsonNode jsonNode, HashMap<ProductFilterTerms,String> searchMap) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
         List<Product> products = new ArrayList<>();
-        if (arrayNode != null && arrayNode.isArray()) {
-            for (final JsonNode objNode : arrayNode) {
+        if (jsonNode != null && jsonNode.isArray()) {
+            for (final JsonNode objNode : jsonNode) {
                 Product product = mapper.readValue(objNode.toString(), Product.class);
                 if (searchMap.containsKey(ProductFilterTerms.locationId)) {product.setLocationId(searchMap.get(ProductFilterTerms.productId));}
                 products.add(product);
             }
+        }
+        else if (jsonNode != null && !jsonNode.isArray()) {
+            products.add(mapper.readValue(jsonNode.toString(), Product.class));
         }
         return products;
     }
