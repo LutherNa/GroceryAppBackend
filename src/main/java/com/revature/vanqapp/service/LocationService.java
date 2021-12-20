@@ -44,7 +44,7 @@ public class LocationService {
      * @param searchMap the Location term and information to search for in a pair
      * @return returns a url string
      */
-    private ArrayNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
+    private JsonNode getAPISearchLocation(HashMap<LocationFilterTerms, String> searchMap){
         StringBuilder searchBuilder = new StringBuilder().append("https://api.kroger.com/v1/locations");
         if(searchMap.containsKey(LocationFilterTerms.locationId)){
             return krogerApiRepository.krogerAPIRequest(searchBuilder
@@ -72,21 +72,24 @@ public class LocationService {
 
     /**
      * Takes an ArrayNode (List of Json objects) and maps them to locations
-     * @param arrayNode the list of multiple Json objects
+     * @param jsonNode the list of multiple Json objects
      * @return returns a list of mapped Locations
      * @throws JsonProcessingException returns JsonProcessingException if unable to parse the ArrayNode
      */
-    private List<Location> parseArrayNodeToLocation(ArrayNode arrayNode) throws JsonProcessingException {
+    private List<Location> parseArrayNodeToLocation(JsonNode jsonNode) throws JsonProcessingException {
         final ObjectMapper mapper = new ObjectMapper();
 //        SimpleModule module = new SimpleModule("LocationDeserializer");
 //        module.addDeserializer(Location.class, new LocationDeserializer(Location.class));
 //        mapper.registerModule(module);
         List<Location> locations = new ArrayList<>();
-        if (arrayNode != null && arrayNode.isArray()) {
-            for (final JsonNode objNode : arrayNode) {
+        if (jsonNode != null && jsonNode.isArray()) {
+            for (final JsonNode objNode : jsonNode) {
                 Location location = mapper.readValue(objNode.toString(), Location.class);
                 locations.add(location);
             }
+        }
+        else if (jsonNode != null && !jsonNode.isArray()) {
+            locations.add(mapper.readValue(jsonNode.toString(),Location.class));
         }
         return locations;
     }

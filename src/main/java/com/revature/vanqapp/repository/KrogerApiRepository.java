@@ -1,5 +1,6 @@
 package com.revature.vanqapp.repository;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.revature.vanqapp.model.AuthToken;
@@ -27,12 +28,12 @@ public class KrogerApiRepository {
      * @param url the url used to query the API
      * @return returns an ArrayNode of all the Json objects collected
      */
-    public ArrayNode krogerAPIRequest(String url){
+    public JsonNode krogerAPIRequest(String url){
         if (tokenPool == null) {
             this.tokenPool = pool.getAuthTokenPool();
         }
         AuthToken authToken = null;
-        ArrayNode arrayNode = null;
+        JsonNode jsonNode = null;
         try {
             authToken = tokenPool.borrowObject();
             OkHttpClient client = new OkHttpClient();
@@ -44,12 +45,7 @@ public class KrogerApiRepository {
                     .build();
             Response response = client.newCall(request).execute();
             //needs error handling for empty ArrayNode
-            try{
-                arrayNode = (ArrayNode) new ObjectMapper().readTree(response.body().string()).path("data");
-            }catch(ClassCastException n){
-                System.out.println(n.getStackTrace());
-                //Add this to a logger in the future
-            }
+                jsonNode = new ObjectMapper().readTree(response.body().string()).path("data");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -61,6 +57,6 @@ public class KrogerApiRepository {
                 // ignored
             }
         }
-        return arrayNode;
+        return jsonNode;
     }
 }
