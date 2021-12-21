@@ -18,6 +18,6 @@ public class AuthToken {
     private int expires_in;
     private long checkout_time = System.currentTimeMillis();
     public boolean isNotTimedOut () {
-        return (this.expires_in * 1000L + this.checkout_time < System.currentTimeMillis());
+        return ((this.expires_in * 1000L)/5L + this.checkout_time < System.currentTimeMillis());
     }
 }
