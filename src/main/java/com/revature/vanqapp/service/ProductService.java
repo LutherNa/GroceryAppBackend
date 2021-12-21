@@ -52,6 +52,7 @@ public class ProductService {
                 .filter(map -> map.getKey().equals(ProductFilterTerms.productId)
                         || map.getKey().equals(ProductFilterTerms.locationId))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        System.out.println(filteredMap);
         if (filteredMap.size() == 2) {
             return parseArrayNodeToProducts(getAPISearchResult(filteredMap), filteredMap);
         } else{ throw new InputMismatchException(); }
@@ -125,7 +126,7 @@ public class ProductService {
         if (jsonNode != null && jsonNode.isArray()) {
             for (final JsonNode objNode : jsonNode) {
                 Product product = mapper.readValue(objNode.toString(), Product.class);
-                if (searchMap.containsKey(ProductFilterTerms.locationId)) {product.setLocationId(searchMap.get(ProductFilterTerms.productId));}
+                if (searchMap.containsKey(ProductFilterTerms.locationId)) {product.setLocationId(searchMap.get(ProductFilterTerms.locationId));}
                 products.add(product);
             }
         }

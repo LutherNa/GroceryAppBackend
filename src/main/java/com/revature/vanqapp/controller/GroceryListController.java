@@ -1,9 +1,6 @@
 package com.revature.vanqapp.controller;
 
-import com.revature.vanqapp.model.GroceryList;
-import com.revature.vanqapp.model.GroceryListProduct;
-import com.revature.vanqapp.model.User;
-import com.revature.vanqapp.model.ProductFilterTerms;
+import com.revature.vanqapp.model.*;
 import com.revature.vanqapp.service.GroceryListService;
 import com.revature.vanqapp.service.UserService;
 import com.revature.vanqapp.util.JwtUtil;
@@ -34,8 +31,9 @@ public class GroceryListController {
     }
 
     @GetMapping("/{name}/{locationId}")
-    public List<GroceryListProduct> viewGroceryList (@PathVariable String name, @RequestHeader("Authorization") String token){
-        return groceryListService.viewGroceryList(name, parseToken(token).getUserId());
+    public GroceryListResponse viewGroceryList (@PathVariable String name, @RequestHeader("Authorization") String token){
+        return new GroceryListResponse(groceryListService.viewGroceryList(name, parseToken(token).getUserId())
+                , groceryListService.getGroceryListProducts(groceryListService.viewGroceryList(name, parseToken(token).getUserId())));
     }
 
     @PostMapping("/{name}/{locationId}")
@@ -49,20 +47,26 @@ public class GroceryListController {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
         searchMap.put(ProductFilterTerms.locationId, locationId);
         searchMap.put(ProductFilterTerms.productId, productId);
-        return groceryListService.addProductToGroceryList(name, parseToken(token).getUserId(), Integer.parseInt(count),  searchMap);
+        return groceryListService.addProductToGroceryList(name, parseToken(token).getUserId(), Integer.parseInt(count), searchMap);
     }
 
-    @DeleteMapping("/{name}/{locationId}")
+    @DeleteMapping("/{name}")
     public List<GroceryListProduct> deleteGroceryList (@RequestHeader("Authorization") String token, @PathVariable String name){
         return groceryListService.deleteGroceryList(name, parseToken(token).getUserId());
     }
 
     @DeleteMapping("/{name}/{locationId}/{productId}")
-    public GroceryListProduct deleteProductFromGroceryList (@RequestHeader("Authorization") String token, @PathVariable String name, @PathVariable String locationId, @PathVariable String productId) throws IOException {
+    public boolean deleteProductFromGroceryList (@RequestHeader("Authorization") String token, @PathVariable String name, @PathVariable String locationId, @PathVariable String productId) throws IOException {
         HashMap<ProductFilterTerms,String> searchMap = new HashMap<>();
         searchMap.put(ProductFilterTerms.locationId, locationId);
         searchMap.put(ProductFilterTerms.productId, productId);
         return groceryListService.deleteProductFromGroceryList(name, parseToken(token).getUserId(), searchMap);
+    }
+
+    @DeleteMapping("/{name}/{productListId}")
+    public boolean deleteProductFromGroceryListById (@RequestHeader("Authorization") String token, @PathVariable String name, @PathVariable String productListId) {
+//        Why does it want a long instead of an int? - NL
+        return groceryListService.deleteProductFromGroceryListById(name, parseToken(token).getUserId(), Long.valueOf(productListId));
     }
 
 }

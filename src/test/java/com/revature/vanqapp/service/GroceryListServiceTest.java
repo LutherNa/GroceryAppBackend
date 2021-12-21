@@ -98,7 +98,7 @@ class GroceryListServiceTest {
     void viewGroceryList() {
         List<GroceryListProduct> groceryListProducts = new ArrayList<>();
         GroceryList groceryList = new GroceryList();
-        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
+//        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
         Mockito.when(mockGroceryListProductRepository.findByGroceryList(new GroceryList())).thenReturn(groceryListProducts);
         assert groceryListService.viewGroceryList(name, userId) != null;
     }
@@ -107,7 +107,7 @@ class GroceryListServiceTest {
     void deleteGroceryList() {
         List<GroceryListProduct> groceryListProducts = new ArrayList<>();
         GroceryList groceryList = new GroceryList();
-        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
+//        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
         Mockito.when(mockGroceryListProductRepository.deleteAllByGroceryList(new GroceryList())).thenReturn(groceryListProducts);
         assert groceryListService.viewGroceryList(name, userId) != null;
     }
@@ -119,7 +119,7 @@ class GroceryListServiceTest {
         GroceryListProduct groceryListProduct= new GroceryListProduct();
         Product product = new Product();
         product_list.add(product);
-        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
+//        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
         Mockito.when(mockProductService.getProductsByIdAndLocation(searchMap)).thenReturn(product_list);
         Mockito.when(mockGroceryListProductRepository.findByGroceryListAndProduct(mockGroceryList, product)).thenReturn(groceryListProduct);
         assert groceryListService.addProductToGroceryList(name, userId, count, searchMap) != null;
@@ -132,10 +132,11 @@ class GroceryListServiceTest {
         GroceryListProduct groceryListProduct= new GroceryListProduct();
         Product product = new Product();
         product_list.add(product);
-        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
+//        Mockito.when(mockGroceryListRepository.findByOwnerAndListName(mockUserService.findUserById(userId), name)).thenReturn(groceryList);
         Mockito.when(mockProductService.getProductsByIdAndLocation(searchMap)).thenReturn(product_list);
         Mockito.when(mockGroceryListProductRepository.findByGroceryListAndProduct(mockGroceryList, product)).thenReturn(groceryListProduct);
-        assert groceryListService.deleteProductFromGroceryList(name, userId, searchMap) != null;
+        //changed a few of these when delete was changed to return null; possible bad test.
+        assert groceryListService.deleteProductFromGroceryList(name, userId, searchMap);
     }
 
 

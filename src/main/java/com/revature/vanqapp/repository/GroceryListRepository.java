@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GroceryListRepository extends JpaRepository<GroceryList, Integer> {
     List<GroceryList> findByOwner(User user);
-    GroceryList findByOwnerAndListName(User user, String name);
+    Optional<GroceryList> findByOwnerAndListName(User user, String listName);
 }
