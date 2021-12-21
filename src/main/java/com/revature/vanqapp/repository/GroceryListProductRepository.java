@@ -18,4 +18,6 @@ public interface GroceryListProductRepository extends JpaRepository<GroceryListP
     List<GroceryListProduct> deleteAllByGroceryList(GroceryList groceryList);
     @Transactional
     Integer deleteByGroceryListAndProduct(GroceryList groceryList, Product product);
+    @Transactional
+    Integer deleteByGroceryListAndProductListId(GroceryList groceryList, Long productId);
 }
