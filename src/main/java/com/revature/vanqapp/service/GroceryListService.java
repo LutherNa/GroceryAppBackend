@@ -69,8 +69,8 @@ public class GroceryListService {
     public GroceryListProduct addProductToGroceryList(String name, Integer userId, Integer count, HashMap<ProductFilterTerms,String> searchMap) throws IOException {
         GroceryList groceryList = groceryListRepository.findByOwnerAndListName(userService.findUserById(userId), name);
         List<Product> product_list = productService.getProductsByIdAndLocation(searchMap);
+        product_list.get(0).setLocationId(searchMap.get(ProductFilterTerms.locationId));
         Product product = product_list.get(0);
-
         if (((product.getClass()) == Product.class) && (groceryList.getClass() == GroceryList.class)) {
             GroceryListProduct groceryListProduct = new GroceryListProduct();
             groceryListProduct.setProduct(product);
