@@ -1,5 +1,5 @@
 # Project 2: The "NotAKrogerApp" Shopping Companion App
-_See the backend [here](https://github.com/LutherNa/GroceryAppFrontend)_
+_See the frontend [here](https://github.com/LutherNa/GroceryAppFrontend)_
 
 For my second project with Revature my group and I were taksed with building our first full-stack application. To that end we decided to make a shopping assistant app relying on the [Kroger API](https://developer.kroger.com/reference/). 
 
