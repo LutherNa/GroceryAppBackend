@@ -1,18 +1,25 @@
-#The Kroger Shopping companion app
+# Project 2: The "NotAKrogerApp" Shopping Companion App
 
-###To help optimize shopping trips
+For my second project with Revature my group and I were taksed with building our first full-stack application. To that end we decided to make a shopping assistant app relying on the [Kroger API](https://developer.kroger.com/reference/). 
 
-<br>
-<br>
-User Stories:
+## User Stories:
 
 * [x] Create and log in to an Account
 * [x] Choose Kroger Location
 * [x] Make a new shopping list
-* [ ] View an existing shopping list
-* [ ] Add multiple of a single item to a shopping list
-* [ ] Remove an item from a shopping list
+* [X] Add and Remove items from a shopping list. 
+* [X] View an existing shopping list
 * [x] Search for an item by name
-* [ ] Delete an entire grocery list
-* [ ] Exporting a grocery list to be printed.
-* [ ] User downloading the list on their computer/mobile device 
+
+## Technologies Utilized
+
+- RDBMS for persistence 
+- API built with Java 8 and Spring 5
+- UI built with React.
+- Technlology leverages an external API (the Kroger API
+### Technology framework: 
+- Java API using Hibernate to communicate with a PostGreSQL RDBMS 
+- Java API leveraging the Spring Framework
+- Java API RESTful 
+- Java API secured with Spring Security
+- Cloud deployment utilizing AWS RDS, EC2, and S3 readily possible
