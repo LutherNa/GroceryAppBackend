@@ -17,7 +17,7 @@ For my second project with Revature my group and I were taksed with building our
 - RDBMS for persistence 
 - API built with Java 8 and Spring 5
 - UI built with React.
-- Technlology leverages an external API (the Kroger API
+- Technlology leverages an external API (the Kroger API)
 ### Technology framework: 
 - Java API using Hibernate to communicate with a PostGreSQL RDBMS 
 - Java API leveraging the Spring Framework
